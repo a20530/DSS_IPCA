@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %} InsecureWebApp :: Security {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="site-section bg-light">
+    <div class="container min-vh-100">
+
+        <div class="row">
+            <div class="col-md-3 mr-auto">
+                {% set active_page = "security" %}
+                {% include "includes/sidebar.html" ignore missing %}
+            </div>
+
+            <div class="col-md-9">
+
+                {% include "includes/alerts.html" ignore missing with context %}
+ 
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div>
+                            {% if user.otp_enabled %}
+                                <p class="lead">
+                                    Two-Factor Authentication (2FA) is enabled for your account.
+                                </p>
+                                <p>Please refer to the following instructions to make use of 2FA:</p>
+                                <ol>
+                                    <li>Download <a href="">Google Authenticator</a> or a similar App to your mobile</li>
+                                    <li>Setup a new Authenticator</li>
+                                    <li>Scan the QR code below or enter the Secret Token text</li>
+                                </ol>
+                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src="data:image/png;base64,{{ qr_b64 }}" alt="QR Code" class="img-fluid mx-auto d-block" style="max-width:200px;">
+                                        <label for="secret-input" class="text-black">Secret Token</label>
+                                        <div role="group" class="input-group">
+                                            <input type="text" class="form-control" id="secret-input" name="secret-input" value="{{ secret }}"
+                                                readonly>
+                                            <button class="btn btn-outline-secondary" type="button" id="copy-secret-button">Copy to clipboard</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <form class="form-horizontal" method="post">
+                                    <div class="row mt-4">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary" type="submit" href="{{ url_for("users.security") }}">Disable 2FA</button>
+                                            <input type="hidden" name="disable_otp" value="{{ true }}"/>
+                                        </div>
+                                    </div>
+                                </form>    
+
+                            {% else %}
+                                <p class="lead">Two-Factor Authentication (2FA) is not enabled for your account.</p>
+
+                                <form class="form-horizontal" method="post">
+                                    <div class="row mt-4">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary" type="submit" href="{{ url_for("users.security") }}">Enable 2FA</button>
+                                            <input type="hidden" name="enable_otp" value="{{ true }}"/>
+                                        </div>
+                                    </div>
+                                </form> 
+                            {% endif %}                              
+                        </div>
+                    </div>
+                </div>           
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            $('#copy-secret-button').on("click", function(e) {
+                e.preventDefault();
+		        copy_input($('#secret-input'));
+            });
+        });
+
+        // copy function
+        function copy_input($input) {
+            $input.focus();
+            $input.select();
+            try {  
+                var successful = document.execCommand('copy'); 
+            } catch(err) {  
+                console.error('Unable to copy'); 
+            }
+        }
+    })(jQuery);
+</script>
+{% endblock %}

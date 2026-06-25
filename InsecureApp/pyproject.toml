@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = [
+  "."
+]
+
+[tool.coverage.run]
+branch = true
+source = ["iwa"]

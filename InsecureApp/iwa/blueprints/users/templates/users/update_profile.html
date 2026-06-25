@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %} InsecureWebApp :: Login & Security {% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+
+<div class="site-section">
+    <div class="container min-vh-100">
+
+        <div class="row">
+            <div class="col-md-3 mr-auto">
+                {% set active_page = "security" %}
+                {% include "includes/sidebar.html" ignore missing %}
+            </div>
+
+            <div class="col-md-9">
+
+                {% include "includes/alerts.html" ignore missing with context %}
+
+                <form method="post" class="form-horizontal">
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="email" class="text-black">Email Address </label>
+                            <input value="{{ user.email }}" type="text" class="form-control" id="email" name="email">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="text-black">Mobile </label>
+                            <input value="{{ user.phone }}" type="text" class="form-control" id="phone" name="phone" placeholder="Mobile Number">
+                        </div>
+                    </div>
+
+                    <div class="row border border-primary">
+                        <div class="col-md-12">
+                            <label for="password" class="text-black">Password</label>
+                            <input type="password" class="form-control" id="password" autocomplete="off" value="" name="password">
+                            <small id="passwordHelp" class="form-text text-muted">Enter your current password to save changes.</small>
+                            
+                        </div>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <button id="submit-btn" type="submit" class="btn btn-primary">Submit</button>
+                            <a class="btn btn-info" href="{{ url_for("users.security") }}">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+ 
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            $('#copy-secret-button').on("click", function(e) {
+                e.preventDefault();
+		        copy_input($('#secret-input'));
+            });
+        });
+
+        // copy function
+        function copy_input($input) {
+            $input.focus();
+            $input.select();
+            try {  
+                var successful = document.execCommand('copy'); 
+            } catch(err) {  
+                console.error('Unable to copy'); 
+            }
+        }
+    })(jQuery);
+</script>
+{% endblock %}
