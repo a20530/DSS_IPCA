@@ -1,0 +1,1 @@
+This is a safe demo file for the corrected load_file/template routes.

@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport"/>
+    <title>{% block title %} {% endblock %}</title>
+    <link href="{{ url_for('static', filename='css/lib/bootstrap.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/lib/bootstrap-icons.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/lib/owl.carousel/owl.carousel.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/lib/owl.carousel/owl.theme.default.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/lib/star-rating.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/lib/star-rating-theme.min.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/app.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='favicon.ico') }}" rel="shortcut icon" type="image/ico"/>
+    {% block styles %} {% endblock %}
+</head>
+
+<body>
+
+<div class="d-flex flex-column min-vh-100 site-wrap bg-light" id="app">
+
+    <!-- header -->
+    <div class="site-header d-flex align-items-center position-relative">
+        <!-- logo -->
+        <a class="logo" href="{{ url_for('main.index') }}">
+            <img alt="IWA Pharmacy Direct" height="60" src="{{ url_for('static', filename='img/logo.png') }}"
+                 width="160">
+        </a>
+        <div class="search-bar mx-auto d-none d-sm-block">
+            <form action="{{ url_for('products.index') }}" class="d-flex" method="get" role="search">
+                <div class="input-group">
+                    <input aria-label="Search" class="form-control" id="search-input"
+                           name="keywords" placeholder="Quick search" required type="search"/>
+                    <button class="btn btn-outline-secondary" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <!-- user menu and shopping cart -->
+        <div class="user-menu d-flex align-items-end px-3">
+            <a class="btn btn-nav d-flex flex-column align-items-center" href="{{ url_for('users.home') }}"
+               id="account">
+                <i class="bi bi-person-circle" style="font-size: 1.2rem; padding-bottom: 0.1em"></i>
+                <span>Account</span>
+            </a>
+            <a class="btn btn-nav d-flex flex-column align-items-center" href="{{ url_for('cart.index') }}" id="cart" type="button">
+                <span class="position-relative d-inline-block">
+                    <i class="bi bi-cart" style="font-size: 1.2rem; padding-bottom: 0.1em"></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                          style="transform: translate(-0%, -50%) !important;">
+                        <span class="number" id="shopping-cart-count">0</span>
+                        <span class="visually-hidden">cart items</span>
+                    </span>
+                </span>
+                <span>Your Cart</span>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- navbar -->
+    <nav aria-label="Main navigation" class="navbar site-navbar site-header navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+
+            <button aria-controls="offcanvasDarkNavbar" class="navbar-toggler" data-bs-target="#offcanvasDarkNavbar"
+                    data-bs-toggle="offcanvas" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div aria-labelledby="offcanvasDarkNavbarLabel" class="offcanvas offcanvas-start text-bg-dark" id="offcanvasDarkNavbar"
+                 tabindex="-1">
+                <div class="offcanvas-header">
+                    <button aria-label="Close" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                            type="button"></button>
+                </div>
+                <div class="offcanvas-body mx-lg-auto justify-content-center">
+                    <ul class="navbar-nav mx-lg-auto justify-content-center pe-3 text-start">
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle"
+                               data-bs-toggle="dropdown" href="{{ url_for('products.index') }}" id="navbarDropdownMenuLinkShop"
+                               role="button">
+                                Shop
+                            </a>
+                            <ul aria-labelledby="navbarDropdownMenuLinkShop" class="dropdown-menu dropdown-menu-dark">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('products.index') }}">Health &amp;
+                                        wellbeing</a>
+                                    <ul class="dropdown-menu dropdown-submenu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#">First aid</a></li>
+                                        <li><a class="dropdown-item" href="#">Health conditions</a></li>
+                                        <li><a class="dropdown-item" href="#">Stop smoking</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('products.index') }}">Medicines &amp;
+                                        treatments</a>
+                                    <ul class="dropdown-menu dropdown-submenu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#">Allergy &amp; hayfever</a></li>
+                                        <li><a class="dropdown-item" href="#">Children's medicines</a></li>
+                                        <li><a class="dropdown-item" href="#">Cough, cold &amp; flu</a></li>
+                                        <li><a class="dropdown-item" href="#">Pain relief</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{ url_for('products.index') }}">Vitamins &amp;
+                                        supplements</a>
+                                    <ul class="dropdown-menu dropdown-submenu dropdown-menu-dark">
+                                        <li><a class="dropdown-item" href="#">Everyday vitamins &amp;
+                                            supplements</a></li>
+                                        <li><a class="dropdown-item" href="#">Children's vitamins &amp;
+                                            supplements</a></li>
+                                        <li><a class="dropdown-item" href="#">Mens supplements</a></li>
+                                        <li><a class="dropdown-item" href="#">Womens supplements</a></li>
+                                    </ul>
+                                </li>
+                                <li><a class="dropdown-item" href="{{ url_for('products.index') }}">Weight
+                                    management</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('products.index') }}">Toiletries</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-start pe-3">
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle"
+                               data-bs-toggle="dropdown" href="{{ url_for('products.index') }}" id="navbarDropdownMenuLinkPrescriptions"
+                               role="button">
+                                Prescriptions
+                            </a>
+                            <ul aria-labelledby="navbarDropdownMenuLinkPrescriptions"
+                                class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="{{ url_for('products.index') }}">One-off
+                                    prescriptions</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('products.index') }}">Repeat
+                                    prescriptions</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-start pe-3">
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle"
+                               data-bs-toggle="dropdown" href="{{ url_for('products.index') }}" id="navbarDropdownMenuLinkServices"
+                               role="button">
+                                Services
+                            </a>
+                            <ul aria-labelledby="navbarDropdownMenuLinkServices"
+                                class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="#">Flu
+                                    vaccinations</a></li>
+                                <li><a class="dropdown-item" href="#">Stop smoking</a>
+                                </li>
+                                <li><a class="dropdown-item" href="#">Travel
+                                    vaccinations</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                        <li class="nav-item dropdown">
+                            <a aria-expanded="false" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
+                               href="{{ url_for('assistant.health_assistant') }}" id="navbarDropdownMenuLinkAdvice" role="button">
+                                Advice
+                            </a>
+                            <ul aria-labelledby="navbarDropdownMenuLinkAdvice"
+                                class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="{{ url_for('assistant.health_assistant') }}">Health Assistant</a></li>
+                                <li><a class="dropdown-item" href="{{ url_for('assistant.symptom_checker') }}">Symptom Checker</a></li>
+
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav justify-content-start flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a aria-expanded="false" class="nav-link" data-bs-toggle="dropdown"
+                               href="" id="navbarDropdownMenuLinkGetInTouch" role="button">
+                                Get in Touch
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    {% block content %} {% endblock %}
+
+    <!-- footer -->
+    <footer class="site-footer mt-auto">
+        <div class="row">
+            <div class="col-md-3 footer-brand animated fadeInLeft">
+                <h4>InsecureWebApp</h4>
+                <p>
+                    This is a deliberately insecure web application for use in Application Security training and
+                    demonstrations.
+                    Please do not use in Production environments.
+                </p>
+                <p>
+                    See the source code on <a href="https://github.com/kadraman/InsecureWebApp">GitHub.</a>
+                    Made available under the
+                    <a href="https://www.gnu.org/licenses/gpl-3.0.html" target="_blank">GNU General Public License
+                        v3.0.</a>
+                </p>
+            </div>
+            <div class="col-md-4 footer-nav animated fadeInUp">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Menu -</h4>
+                        <ul class="pages">
+                            <li><a href="{{ url_for('products.index') }}">Shop</a></li>
+                            <li><a href="#">Prescriptions</a></li>
+                            <li><a href="#">Services</a></li>
+                            <li><a href="#">Advice</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list">
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Contacts</a></li>
+                            <li><a href="#">Terms & Condition</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 footer-social animated fadeInDown">
+                <h4>Follow Us</h4>
+                <ul>
+                    <li>
+                        <div class="ml-1">
+                            <a href="#"><i class="bi bi-facebook me-2"></i>Facebook</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ml-1">
+                            <a href="#"><i class="bi bi-twitter-x me-2"></i>Twitter</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ml-1">
+                            <a href="#"><i class="bi bi-instagram me-2"></i>Instagram</a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="ml-1">
+                            <a href="#"><i class="bi bi-rss me-2"></i>RSS</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-3 footer-ns animated fadeInRight">
+                <h4>Newsletter</h4>
+                <p>Sign-up for our newsletter by entering your email address below:</p>
+                <p>
+                <div id="subscribe-newsletter">
+                    <div class="email-confirmation-input">
+                        <div class="input-group" role="group">
+                            <input class="form-control" id="email-subscribe-input" placeholder="Your email address"
+                                   required type="text"/>
+                            <button class="btn btn-secondary" id="email-subscribe-button" type="button">
+                                <i class="bi bi-envelope-arrow-up"></i>
+                            </button>
+                        </div>
+
+                        <div class="confirmation-modal">
+                            <div id="email-confirmation-modal">
+                                <div aria-hidden="true" class="modal fade" id="confirmation-modal" role="dialog"
+                                     style="display: none;">
+                                    <div class="modal-dialog modal-md">
+                                        <div aria-describedby="confirmation-modal-body" aria-labelledby="confirmation-header" class="modal-content"
+                                             role="document" tabindex="-1">
+                                            <header class="modal-header" id="confirmation-modal-header">
+                                                <h5 class="modal-title">Newsletter Registration</h5>
+                                                <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
+                                                        type="button"></button>
+                                            </header>
+                                            <div class="modal-body" id="confirmation-modal-body">
+                                                <div class="m-4 text-center">
+                                                    <h4></h4>
+                                                </div>
+                                            </div>
+                                            <footer class="modal-footer" id="confirmation-modal-footer">
+                                                <button class="btn btn-primary" data-bs-dismiss="modal"
+                                                        type="button">OK
+                                                </button>
+                                            </footer>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% include "includes/cookies.html" ignore missing %}
+
+    <script src="{{ url_for('static', filename='js/lib/jquery.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/lib/bootstrap.bundle.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/lib/owl.carousel.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/lib/moment.min.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('static', filename='js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('main.static', filename='js/SubscribeNewsletter.js') }}" type="text/javascript"></script>
+    <script src="{{ url_for('cart.static', filename='js/CartCount.js') }}" type="text/javascript"></script>
+
+    <script>
+        /*<![CDATA[*/
+        var userId = null;
+        var jwtToken = null;
+        /*]]>*/
+        (function ($) {
+            $(document).ready(function () {
+                $('#subscribe-newsletter').SubscribeNewsletter();
+                $('#shopping-cart-count').CartCount();
+                if (!localStorage.getItem('cookieConsent')) {
+                    var cookieModal = new bootstrap.Modal($('#cookieConsentModal')[0]);
+                    cookieModal.show();
+                    $('#acceptCookies').on('click', function () {
+                      localStorage.setItem('cookieConsent', 'true');
+                      // TODO: Implement logic to enable non-essential cookies
+                      cookieModal.hide();
+                    });
+                    $('#rejectCookies').on('click', function () {
+                      localStorage.setItem('cookieConsent', 'false');
+                      cookieModal.hide();
+                    });
+                }
+                //$('.alert').each(function () {
+                //    new bootstrap.Alert(this);
+                //    let alert_timeout = $(this).data('timeout');
+                //    setTimeout(() => {
+                //        bootstrap.Alert.getInstance(this).close();
+                //    }, +alert_timeout);
+                //});
+            });
+        })(jQuery);
+    </script>
+
+    {% block scripts %} {% endblock %}
+
+</div>
+
+</body>
+
+</html>
