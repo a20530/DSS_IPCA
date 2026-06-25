@@ -1,0 +1,3970 @@
+{
+    "version": "1.165.0",
+    "results": [
+        {
+            "check_id": "yaml.github-actions.security.run-shell-injection.run-shell-injection",
+            "path": ".github/workflows/fod.yml",
+            "start": {
+                "line": 84,
+                "col": 9,
+                "offset": 3160
+            },
+            "end": {
+                "line": 94,
+                "col": 2,
+                "offset": 3991
+            },
+            "extra": {
+                "message": "Using variable interpolation `${{...}}` with `github` context data in a `run:` step could allow an attacker to inject their own code into the runner. This would allow them to steal secrets and code. `github` context data can have arbitrary user input and should be treated as untrusted. Instead, use an intermediate environment variable with `env:` to store the data and use the environment variable in the `run:` script. Be sure to use double-quotes the environment variable, like this: \"$ENVVAR\".",
+                "metadata": {
+                    "category": "security",
+                    "cwe": [
+                        "CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+                    ],
+                    "owasp": [
+                        "A01:2017 - Injection",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://docs.github.com/en/actions/learn-github-actions/security-hardening-for-github-actions#understanding-the-risk-of-script-injections",
+                        "https://securitylab.github.com/research/github-actions-untrusted-input/"
+                    ],
+                    "technology": [
+                        "github-actions"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "vuln"
+                    ],
+                    "likelihood": "HIGH",
+                    "impact": "HIGH",
+                    "confidence": "HIGH",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Command Injection"
+                    ],
+                    "source": "https://semgrep.dev/r/yaml.github-actions.security.run-shell-injection.run-shell-injection",
+                    "shortlink": "https://sg.run/pkzk"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "dockerfile.security.missing-user.missing-user",
+            "path": "Dockerfile",
+            "start": {
+                "line": 17,
+                "col": 1,
+                "offset": 332
+            },
+            "end": {
+                "line": 17,
+                "col": 78,
+                "offset": 409
+            },
+            "extra": {
+                "message": "By not specifying a USER, a program in the container may run as 'root'. This is a security hazard. If an attacker can control a process running as root, they may have control over the container. Ensure that the last USER in a Dockerfile is a USER other than 'root'.",
+                "fix": "USER non-root\nCMD [\"gunicorn\", \"--bind\", \"0.0.0.0\", \"--timeout\", \"600\", \"iwa:create_app()\"]",
+                "metadata": {
+                    "cwe": [
+                        "CWE-250: Execution with Unnecessary Privileges"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "dockerfile"
+                    ],
+                    "confidence": "MEDIUM",
+                    "owasp": [
+                        "A04:2021 - Insecure Design",
+                        "A06:2025 - Insecure Design"
+                    ],
+                    "references": [
+                        "https://owasp.org/Top10/A04_2021-Insecure_Design"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "MEDIUM",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Improper Authorization"
+                    ],
+                    "source": "https://semgrep.dev/r/dockerfile.security.missing-user.missing-user",
+                    "shortlink": "https://sg.run/Gbvn"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+            "path": "iwa/blueprints/assistant/assistant_routes.py",
+            "start": {
+                "line": 56,
+                "col": 9,
+                "offset": 2223
+            },
+            "end": {
+                "line": 56,
+                "col": 72,
+                "offset": 2286
+            },
+            "extra": {
+                "message": "Found a Flask cookie with insecurely configured properties.  By default the secure, httponly and samesite ar configured insecurely. cookies should be handled securely by setting `secure=True`, `httponly=True`, and `samesite='Lax'` in response.set_cookie(...). If these parameters are not properly set, your cookies are not properly protected and are at risk of being stolen by an attacker. Include the `secure=True`, `httponly=True`, `samesite='Lax'` arguments or set these to be true in the Flask configuration.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
+                    ],
+                    "owasp": [
+                        "A05:2021 - Security Misconfiguration",
+                        "A02:2025 - Security Misconfiguration"
+                    ],
+                    "references": [
+                        "https://flask.palletsprojects.com/en/3.0.x/api/#flask.Response.set_cookie",
+                        "https://flask.palletsprojects.com/en/3.0.x/security/#set-cookie-options"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python",
+                        "flask"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "confidence": "LOW",
+                    "functional-categories": [
+                        "web::search::cookie-config::flask"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cookie Security"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+                    "shortlink": "https://sg.run/gLkZ"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+            "path": "iwa/blueprints/assistant/assistant_routes.py",
+            "start": {
+                "line": 57,
+                "col": 9,
+                "offset": 2295
+            },
+            "end": {
+                "line": 57,
+                "col": 66,
+                "offset": 2352
+            },
+            "extra": {
+                "message": "Found a Flask cookie with insecurely configured properties.  By default the secure, httponly and samesite ar configured insecurely. cookies should be handled securely by setting `secure=True`, `httponly=True`, and `samesite='Lax'` in response.set_cookie(...). If these parameters are not properly set, your cookies are not properly protected and are at risk of being stolen by an attacker. Include the `secure=True`, `httponly=True`, `samesite='Lax'` arguments or set these to be true in the Flask configuration.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
+                    ],
+                    "owasp": [
+                        "A05:2021 - Security Misconfiguration",
+                        "A02:2025 - Security Misconfiguration"
+                    ],
+                    "references": [
+                        "https://flask.palletsprojects.com/en/3.0.x/api/#flask.Response.set_cookie",
+                        "https://flask.palletsprojects.com/en/3.0.x/security/#set-cookie-options"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python",
+                        "flask"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "confidence": "LOW",
+                    "functional-categories": [
+                        "web::search::cookie-config::flask"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cookie Security"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+                    "shortlink": "https://sg.run/gLkZ"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.django-no-csrf-token.django-no-csrf-token",
+            "path": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+            "start": {
+                "line": 44,
+                "col": 21,
+                "offset": 1913
+            },
+            "end": {
+                "line": 55,
+                "col": 28,
+                "offset": 2694
+            },
+            "extra": {
+                "message": "Manually-created forms in django templates should specify a csrf_token to prevent CSRF attacks.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-352: Cross-Site Request Forgery (CSRF)",
+                    "references": [
+                        "https://docs.djangoproject.com/en/4.2/howto/csrf/"
+                    ],
+                    "confidence": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "impact": "MEDIUM",
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "technology": [
+                        "django"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site Request Forgery (CSRF)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.django-no-csrf-token.django-no-csrf-token",
+                    "shortlink": "https://sg.run/N0Bp"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.lang.security.deserialization.pickle.avoid-pickle",
+            "path": "iwa/blueprints/auth/auth_routes.py",
+            "start": {
+                "line": 89,
+                "col": 13,
+                "offset": 2993
+            },
+            "end": {
+                "line": 89,
+                "col": 48,
+                "offset": 3028
+            },
+            "extra": {
+                "message": "Avoid using `pickle`, which is known to lead to code execution vulnerabilities. When unpickling, the serialized data could be manipulated to run arbitrary code. Instead, consider serializing the relevant data as JSON or a similar text-based serialization format.",
+                "metadata": {
+                    "owasp": [
+                        "A08:2017 - Insecure Deserialization",
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "cwe": [
+                        "CWE-502: Deserialization of Untrusted Data"
+                    ],
+                    "references": [
+                        "https://docs.python.org/3/library/pickle.html"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "MEDIUM",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Insecure Deserialization "
+                    ],
+                    "source": "https://semgrep.dev/r/python.lang.security.deserialization.pickle.avoid-pickle",
+                    "shortlink": "https://sg.run/OPwB"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+            "path": "iwa/blueprints/auth/auth_routes.py",
+            "start": {
+                "line": 178,
+                "col": 5,
+                "offset": 6027
+            },
+            "end": {
+                "line": 178,
+                "col": 49,
+                "offset": 6071
+            },
+            "extra": {
+                "message": "Found a Flask cookie with insecurely configured properties.  By default the secure, httponly and samesite ar configured insecurely. cookies should be handled securely by setting `secure=True`, `httponly=True`, and `samesite='Lax'` in response.set_cookie(...). If these parameters are not properly set, your cookies are not properly protected and are at risk of being stolen by an attacker. Include the `secure=True`, `httponly=True`, `samesite='Lax'` arguments or set these to be true in the Flask configuration.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
+                    ],
+                    "owasp": [
+                        "A05:2021 - Security Misconfiguration",
+                        "A02:2025 - Security Misconfiguration"
+                    ],
+                    "references": [
+                        "https://flask.palletsprojects.com/en/3.0.x/api/#flask.Response.set_cookie",
+                        "https://flask.palletsprojects.com/en/3.0.x/security/#set-cookie-options"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python",
+                        "flask"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "confidence": "LOW",
+                    "functional-categories": [
+                        "web::search::cookie-config::flask"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cookie Security"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+                    "shortlink": "https://sg.run/gLkZ"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.xss.make-response-with-unknown-content.make-response-with-unknown-content",
+            "path": "iwa/blueprints/insecure/insecure_routes.py",
+            "start": {
+                "line": 72,
+                "col": 16,
+                "offset": 2159
+            },
+            "end": {
+                "line": 72,
+                "col": 44,
+                "offset": 2187
+            },
+            "extra": {
+                "message": "Be careful with `flask.make_response()`. If this response is rendered onto a webpage, this could create a cross-site scripting (XSS) vulnerability. `flask.make_response()` will not autoescape HTML. If you are rendering HTML, write your HTML in a template file and use `flask.render_template()` which will take care of escaping. If you are returning data from an API, consider using `flask.jsonify()`.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                    ],
+                    "references": [
+                        "https://github.com/python-security/pyt//blob/093a077bcf12d1f58ddeb2d73ddc096623985fb0/examples/vulnerable_code/XSS_assign_to_other_var.py#L11",
+                        "https://flask.palletsprojects.com/en/1.1.x/api/#flask.Flask.make_response",
+                        "https://flask.palletsprojects.com/en/1.1.x/api/#response-objects"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "flask"
+                    ],
+                    "owasp": [
+                        "A07:2017 - Cross-Site Scripting (XSS)",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "MEDIUM",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site-Scripting (XSS)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.xss.make-response-with-unknown-content.make-response-with-unknown-content",
+                    "shortlink": "https://sg.run/3x3p"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.lang.security.dangerous-system-call.dangerous-system-call",
+            "path": "iwa/blueprints/insecure/insecure_routes.py",
+            "start": {
+                "line": 86,
+                "col": 5,
+                "offset": 2564
+            },
+            "end": {
+                "line": 86,
+                "col": 19,
+                "offset": 2578
+            },
+            "extra": {
+                "message": "Found user-controlled data used in a system call. This could allow a malicious actor to execute commands. Use the 'subprocess' module instead, which is easier to use without accidentally exposing a command injection vulnerability.",
+                "metadata": {
+                    "source-rule-url": "https://bandit.readthedocs.io/en/latest/plugins/b605_start_process_with_a_shell.html",
+                    "cwe": [
+                        "CWE-78: Improper Neutralization of Special Elements used in an OS Command ('OS Command Injection')"
+                    ],
+                    "owasp": [
+                        "A01:2017 - Injection",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://semgrep.dev/docs/cheat-sheets/python-command-injection/"
+                    ],
+                    "asvs": {
+                        "control_id": "5.2.4 Dyanmic Code Execution Features",
+                        "control_url": "https://github.com/OWASP/ASVS/blob/master/4.0/en/0x13-V5-Validation-Sanitization-Encoding.md#v52-sanitization-and-sandboxing-requirements",
+                        "section": "V5: Validation, Sanitization and Encoding Verification Requirements",
+                        "version": "4"
+                    },
+                    "category": "security",
+                    "technology": [
+                        "python"
+                    ],
+                    "confidence": "MEDIUM",
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "vuln"
+                    ],
+                    "likelihood": "HIGH",
+                    "impact": "HIGH",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Command Injection"
+                    ],
+                    "source": "https://semgrep.dev/r/python.lang.security.dangerous-system-call.dangerous-system-call",
+                    "shortlink": "https://sg.run/k0W7"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.xss.audit.direct-use-of-jinja2.direct-use-of-jinja2",
+            "path": "iwa/blueprints/insecure/insecure_routes.py",
+            "start": {
+                "line": 100,
+                "col": 12,
+                "offset": 3002
+            },
+            "end": {
+                "line": 100,
+                "col": 31,
+                "offset": 3021
+            },
+            "extra": {
+                "message": "Detected direct use of jinja2. If not done properly, this may bypass HTML escaping which opens up the application to cross-site scripting (XSS) vulnerabilities. Prefer using the Flask method 'render_template()' and templates with a '.html' extension in order to prevent XSS.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-79: Improper Neutralization of Input During Web Page Generation ('Cross-site Scripting')"
+                    ],
+                    "owasp": [
+                        "A07:2017 - Cross-Site Scripting (XSS)",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://jinja.palletsprojects.com/en/2.11.x/api/#basics"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "flask"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "MEDIUM",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site-Scripting (XSS)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.xss.audit.direct-use-of-jinja2.direct-use-of-jinja2",
+                    "shortlink": "https://sg.run/RoKe"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+            "path": "iwa/blueprints/insecure/insecure_routes.py",
+            "start": {
+                "line": 117,
+                "col": 5,
+                "offset": 3533
+            },
+            "end": {
+                "line": 117,
+                "col": 49,
+                "offset": 3577
+            },
+            "extra": {
+                "message": "Found a Flask cookie with insecurely configured properties.  By default the secure, httponly and samesite ar configured insecurely. cookies should be handled securely by setting `secure=True`, `httponly=True`, and `samesite='Lax'` in response.set_cookie(...). If these parameters are not properly set, your cookies are not properly protected and are at risk of being stolen by an attacker. Include the `secure=True`, `httponly=True`, `samesite='Lax'` arguments or set these to be true in the Flask configuration.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
+                    ],
+                    "owasp": [
+                        "A05:2021 - Security Misconfiguration",
+                        "A02:2025 - Security Misconfiguration"
+                    ],
+                    "references": [
+                        "https://flask.palletsprojects.com/en/3.0.x/api/#flask.Response.set_cookie",
+                        "https://flask.palletsprojects.com/en/3.0.x/security/#set-cookie-options"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python",
+                        "flask"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "confidence": "LOW",
+                    "functional-categories": [
+                        "web::search::cookie-config::flask"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cookie Security"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+                    "shortlink": "https://sg.run/gLkZ"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.lang.security.audit.exec-detected.exec-detected",
+            "path": "iwa/blueprints/insecure/insecure_routes.py",
+            "start": {
+                "line": 152,
+                "col": 9,
+                "offset": 4773
+            },
+            "end": {
+                "line": 152,
+                "col": 30,
+                "offset": 4794
+            },
+            "extra": {
+                "message": "Detected the use of exec(). exec() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources.",
+                "metadata": {
+                    "source-rule-url": "https://bandit.readthedocs.io/en/latest/plugins/b102_exec_used.html",
+                    "cwe": [
+                        "CWE-95: Improper Neutralization of Directives in Dynamically Evaluated Code ('Eval Injection')"
+                    ],
+                    "owasp": [
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "asvs": {
+                        "control_id": "5.2.4 Dyanmic Code Execution Features",
+                        "control_url": "https://github.com/OWASP/ASVS/blob/master/4.0/en/0x13-V5-Validation-Sanitization-Encoding.md#v52-sanitization-and-sandboxing-requirements",
+                        "section": "V5: Validation, Sanitization and Encoding Verification Requirements",
+                        "version": "4"
+                    },
+                    "category": "security",
+                    "technology": [
+                        "python"
+                    ],
+                    "references": [
+                        "https://owasp.org/Top10/A03_2021-Injection"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "HIGH",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Code Injection"
+                    ],
+                    "source": "https://semgrep.dev/r/python.lang.security.audit.exec-detected.exec-detected",
+                    "shortlink": "https://sg.run/ndRX"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/command_injection.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 113
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 215
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/insecure_cookies.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 112
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 214
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.django-no-csrf-token.django-no-csrf-token",
+            "path": "iwa/blueprints/insecure/templates/insecure/insecure_cookies.html",
+            "start": {
+                "line": 11,
+                "col": 9,
+                "offset": 338
+            },
+            "end": {
+                "line": 17,
+                "col": 16,
+                "offset": 803
+            },
+            "extra": {
+                "message": "Manually-created forms in django templates should specify a csrf_token to prevent CSRF attacks.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-352: Cross-Site Request Forgery (CSRF)",
+                    "references": [
+                        "https://docs.djangoproject.com/en/4.2/howto/csrf/"
+                    ],
+                    "confidence": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "impact": "MEDIUM",
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "technology": [
+                        "django"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site Request Forgery (CSRF)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.django-no-csrf-token.django-no-csrf-token",
+                    "shortlink": "https://sg.run/N0Bp"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/insecure_headers.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 112
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 214
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.django-no-csrf-token.django-no-csrf-token",
+            "path": "iwa/blueprints/insecure/templates/insecure/insecure_headers.html",
+            "start": {
+                "line": 11,
+                "col": 9,
+                "offset": 340
+            },
+            "end": {
+                "line": 21,
+                "col": 16,
+                "offset": 1046
+            },
+            "extra": {
+                "message": "Manually-created forms in django templates should specify a csrf_token to prevent CSRF attacks.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-352: Cross-Site Request Forgery (CSRF)",
+                    "references": [
+                        "https://docs.djangoproject.com/en/4.2/howto/csrf/"
+                    ],
+                    "confidence": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "impact": "MEDIUM",
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "technology": [
+                        "django"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site Request Forgery (CSRF)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.django-no-csrf-token.django-no-csrf-token",
+                    "shortlink": "https://sg.run/N0Bp"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/load_file.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 105
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 207
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/prompt_injection.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 112
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 214
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/template_injection.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 114
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 216
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.django-no-csrf-token.django-no-csrf-token",
+            "path": "iwa/blueprints/insecure/templates/insecure/template_injection.html",
+            "start": {
+                "line": 11,
+                "col": 9,
+                "offset": 344
+            },
+            "end": {
+                "line": 21,
+                "col": 16,
+                "offset": 1037
+            },
+            "extra": {
+                "message": "Manually-created forms in django templates should specify a csrf_token to prevent CSRF attacks.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-352: Cross-Site Request Forgery (CSRF)",
+                    "references": [
+                        "https://docs.djangoproject.com/en/4.2/howto/csrf/"
+                    ],
+                    "confidence": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "impact": "MEDIUM",
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "technology": [
+                        "django"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site Request Forgery (CSRF)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.django-no-csrf-token.django-no-csrf-token",
+                    "shortlink": "https://sg.run/N0Bp"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/xss1.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 100
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 202
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "html.security.audit.missing-integrity.missing-integrity",
+            "path": "iwa/blueprints/insecure/templates/insecure/xss2.html",
+            "start": {
+                "line": 6,
+                "col": 5,
+                "offset": 100
+            },
+            "end": {
+                "line": 6,
+                "col": 107,
+                "offset": 202
+            },
+            "extra": {
+                "message": "This tag is missing an 'integrity' subresource integrity attribute. The 'integrity' attribute allows for the browser to verify that externally hosted files (for example from a CDN) are delivered without unexpected manipulation. Without this attribute, if an attacker can modify the externally hosted resource, this could lead to XSS and other types of attacks. To prevent this, include the base64-encoded cryptographic hash of the resource (file) you\u2019re telling the browser to fetch in the 'integrity' attribute for all externally hosted files.",
+                "metadata": {
+                    "category": "security",
+                    "technology": [
+                        "html"
+                    ],
+                    "cwe": [
+                        "CWE-353: Missing Support for Integrity Check"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "confidence": "LOW",
+                    "references": [
+                        "https://owasp.org/Top10/A08_2021-Software_and_Data_Integrity_Failures"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cryptographic Issues"
+                    ],
+                    "source": "https://semgrep.dev/r/html.security.audit.missing-integrity.missing-integrity",
+                    "shortlink": "https://sg.run/krXA"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.injection.tainted-sql-string.tainted-sql-string",
+            "path": "iwa/blueprints/products/products_api_routes.py",
+            "start": {
+                "line": 37,
+                "col": 13,
+                "offset": 1273
+            },
+            "end": {
+                "line": 37,
+                "col": 74,
+                "offset": 1334
+            },
+            "extra": {
+                "message": "Detected user input used to manually construct a SQL string. This is usually bad practice because manual construction could accidentally result in a SQL injection. An attacker could use a SQL injection to steal or modify contents of the database. Instead, use a parameterized query which is available by default in most database engines. Alternatively, consider using the Django object-relational mappers (ORM) instead of raw SQL queries.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-915: Improperly Controlled Modification of Dynamically-Determined Object Attributes"
+                    ],
+                    "owasp": [
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "references": [
+                        "https://docs.djangoproject.com/en/3.0/topics/security/#sql-injection-protection"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "django"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "impact": "LOW",
+                    "likelihood": "MEDIUM",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Mass Assignment"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.injection.tainted-sql-string.tainted-sql-string",
+                    "shortlink": "https://sg.run/PbZp"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.injection.tainted-sql-string.tainted-sql-string",
+            "path": "iwa/blueprints/products/products_api_routes.py",
+            "start": {
+                "line": 37,
+                "col": 13,
+                "offset": 1273
+            },
+            "end": {
+                "line": 37,
+                "col": 74,
+                "offset": 1334
+            },
+            "extra": {
+                "message": "Detected user input used to manually construct a SQL string. This is usually bad practice because manual construction could accidentally result in a SQL injection. An attacker could use a SQL injection to steal or modify contents of the database. Instead, use a parameterized query which is available by default in most database engines. Alternatively, consider using an object-relational mapper (ORM) such as SQLAlchemy which will protect your queries.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-704: Incorrect Type Conversion or Cast"
+                    ],
+                    "owasp": [
+                        "A01:2017 - Injection",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-textual-sql",
+                        "https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_quick_guide.htm",
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-more-specific-text-with-table-expression-literal-column-and-expression-column"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "sqlalchemy",
+                        "flask"
+                    ],
+                    "subcategory": [
+                        "vuln"
+                    ],
+                    "impact": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "confidence": "MEDIUM",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Improper Validation"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.injection.tainted-sql-string.tainted-sql-string",
+                    "shortlink": "https://sg.run/JxZj"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query",
+            "path": "iwa/blueprints/products/products_api_routes.py",
+            "start": {
+                "line": 38,
+                "col": 16,
+                "offset": 1350
+            },
+            "end": {
+                "line": 38,
+                "col": 33,
+                "offset": 1367
+            },
+            "extra": {
+                "message": "Avoiding SQL string concatenation: untrusted input concatenated with raw SQL query can result in SQL Injection. In order to execute raw query safely, prepared statement should be used. SQLAlchemy provides TextualSQL to easily used prepared statement with named parameters. For complex SQL composition, use SQL Expression Language or Schema Definition Language. In most cases, SQLAlchemy ORM will be a better option.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')"
+                    ],
+                    "owasp": [
+                        "A01:2017 - Injection",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-textual-sql",
+                        "https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_quick_guide.htm",
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-more-specific-text-with-table-expression-literal-column-and-expression-column"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "sqlalchemy"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "HIGH",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "SQL Injection"
+                    ],
+                    "source": "https://semgrep.dev/r/python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query",
+                    "shortlink": "https://sg.run/2b1L"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query",
+            "path": "iwa/blueprints/products/repository.py",
+            "start": {
+                "line": 37,
+                "col": 9,
+                "offset": 1212
+            },
+            "end": {
+                "line": 43,
+                "col": 10,
+                "offset": 1385
+            },
+            "extra": {
+                "message": "Avoiding SQL string concatenation: untrusted input concatenated with raw SQL query can result in SQL Injection. In order to execute raw query safely, prepared statement should be used. SQLAlchemy provides TextualSQL to easily used prepared statement with named parameters. For complex SQL composition, use SQL Expression Language or Schema Definition Language. In most cases, SQLAlchemy ORM will be a better option.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')"
+                    ],
+                    "owasp": [
+                        "A01:2017 - Injection",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-textual-sql",
+                        "https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_quick_guide.htm",
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-more-specific-text-with-table-expression-literal-column-and-expression-column"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "sqlalchemy"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "HIGH",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "SQL Injection"
+                    ],
+                    "source": "https://semgrep.dev/r/python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query",
+                    "shortlink": "https://sg.run/2b1L"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query",
+            "path": "iwa/blueprints/products/repository.py",
+            "start": {
+                "line": 113,
+                "col": 9,
+                "offset": 3213
+            },
+            "end": {
+                "line": 119,
+                "col": 10,
+                "offset": 3393
+            },
+            "extra": {
+                "message": "Avoiding SQL string concatenation: untrusted input concatenated with raw SQL query can result in SQL Injection. In order to execute raw query safely, prepared statement should be used. SQLAlchemy provides TextualSQL to easily used prepared statement with named parameters. For complex SQL composition, use SQL Expression Language or Schema Definition Language. In most cases, SQLAlchemy ORM will be a better option.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')"
+                    ],
+                    "owasp": [
+                        "A01:2017 - Injection",
+                        "A03:2021 - Injection",
+                        "A05:2025 - Injection"
+                    ],
+                    "references": [
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-textual-sql",
+                        "https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_quick_guide.htm",
+                        "https://docs.sqlalchemy.org/en/14/core/tutorial.html#using-more-specific-text-with-table-expression-literal-column-and-expression-column"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "sqlalchemy"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "HIGH",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "SQL Injection"
+                    ],
+                    "source": "https://semgrep.dev/r/python.sqlalchemy.security.sqlalchemy-execute-raw-query.sqlalchemy-execute-raw-query",
+                    "shortlink": "https://sg.run/2b1L"
+                },
+                "severity": "ERROR",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.django-no-csrf-token.django-no-csrf-token",
+            "path": "iwa/blueprints/users/templates/users/security.html",
+            "start": {
+                "line": 49,
+                "col": 33,
+                "offset": 2388
+            },
+            "end": {
+                "line": 56,
+                "col": 40,
+                "offset": 2940
+            },
+            "extra": {
+                "message": "Manually-created forms in django templates should specify a csrf_token to prevent CSRF attacks.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-352: Cross-Site Request Forgery (CSRF)",
+                    "references": [
+                        "https://docs.djangoproject.com/en/4.2/howto/csrf/"
+                    ],
+                    "confidence": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "impact": "MEDIUM",
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "technology": [
+                        "django"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site Request Forgery (CSRF)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.django-no-csrf-token.django-no-csrf-token",
+                    "shortlink": "https://sg.run/N0Bp"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.django.security.django-no-csrf-token.django-no-csrf-token",
+            "path": "iwa/blueprints/users/templates/users/security.html",
+            "start": {
+                "line": 61,
+                "col": 33,
+                "offset": 3135
+            },
+            "end": {
+                "line": 68,
+                "col": 40,
+                "offset": 3685
+            },
+            "extra": {
+                "message": "Manually-created forms in django templates should specify a csrf_token to prevent CSRF attacks.",
+                "metadata": {
+                    "category": "security",
+                    "cwe": "CWE-352: Cross-Site Request Forgery (CSRF)",
+                    "references": [
+                        "https://docs.djangoproject.com/en/4.2/howto/csrf/"
+                    ],
+                    "confidence": "MEDIUM",
+                    "likelihood": "MEDIUM",
+                    "impact": "MEDIUM",
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "technology": [
+                        "django"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cross-Site Request Forgery (CSRF)"
+                    ],
+                    "source": "https://semgrep.dev/r/python.django.security.django-no-csrf-token.django-no-csrf-token",
+                    "shortlink": "https://sg.run/N0Bp"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.lang.security.deserialization.pickle.avoid-pickle",
+            "path": "iwa/utils/view_utils.py",
+            "start": {
+                "line": 56,
+                "col": 11,
+                "offset": 1678
+            },
+            "end": {
+                "line": 56,
+                "col": 27,
+                "offset": 1694
+            },
+            "extra": {
+                "message": "Avoid using `pickle`, which is known to lead to code execution vulnerabilities. When unpickling, the serialized data could be manipulated to run arbitrary code. Instead, consider serializing the relevant data as JSON or a similar text-based serialization format.",
+                "metadata": {
+                    "owasp": [
+                        "A08:2017 - Insecure Deserialization",
+                        "A08:2021 - Software and Data Integrity Failures",
+                        "A08:2025 - Software or Data Integrity Failures"
+                    ],
+                    "cwe": [
+                        "CWE-502: Deserialization of Untrusted Data"
+                    ],
+                    "references": [
+                        "https://docs.python.org/3/library/pickle.html"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python"
+                    ],
+                    "cwe2022-top25": true,
+                    "cwe2021-top25": true,
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "MEDIUM",
+                    "confidence": "LOW",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Insecure Deserialization "
+                    ],
+                    "source": "https://semgrep.dev/r/python.lang.security.deserialization.pickle.avoid-pickle",
+                    "shortlink": "https://sg.run/OPwB"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+            "path": "iwa/utils/view_utils.py",
+            "start": {
+                "line": 59,
+                "col": 5,
+                "offset": 1782
+            },
+            "end": {
+                "line": 59,
+                "col": 50,
+                "offset": 1827
+            },
+            "extra": {
+                "message": "Found a Flask cookie with insecurely configured properties.  By default the secure, httponly and samesite ar configured insecurely. cookies should be handled securely by setting `secure=True`, `httponly=True`, and `samesite='Lax'` in response.set_cookie(...). If these parameters are not properly set, your cookies are not properly protected and are at risk of being stolen by an attacker. Include the `secure=True`, `httponly=True`, `samesite='Lax'` arguments or set these to be true in the Flask configuration.",
+                "metadata": {
+                    "cwe": [
+                        "CWE-614: Sensitive Cookie in HTTPS Session Without 'Secure' Attribute"
+                    ],
+                    "owasp": [
+                        "A05:2021 - Security Misconfiguration",
+                        "A02:2025 - Security Misconfiguration"
+                    ],
+                    "references": [
+                        "https://flask.palletsprojects.com/en/3.0.x/api/#flask.Response.set_cookie",
+                        "https://flask.palletsprojects.com/en/3.0.x/security/#set-cookie-options"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "python",
+                        "flask"
+                    ],
+                    "subcategory": [
+                        "audit"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "LOW",
+                    "confidence": "LOW",
+                    "functional-categories": [
+                        "web::search::cookie-config::flask"
+                    ],
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Cookie Security"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.secure-set-cookie.secure-set-cookie",
+                    "shortlink": "https://sg.run/gLkZ"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        },
+        {
+            "check_id": "python.flask.security.audit.app-run-security-config.avoid_using_app_run_directly",
+            "path": "main.py",
+            "start": {
+                "line": 28,
+                "col": 1,
+                "offset": 935
+            },
+            "end": {
+                "line": 28,
+                "col": 10,
+                "offset": 944
+            },
+            "extra": {
+                "message": "top-level app.run(...) is ignored by flask. Consider putting app.run(...) behind a guard, like inside a function",
+                "metadata": {
+                    "cwe": [
+                        "CWE-668: Exposure of Resource to Wrong Sphere"
+                    ],
+                    "owasp": [
+                        "A01:2021 - Broken Access Control",
+                        "A01:2025 - Broken Access Control"
+                    ],
+                    "category": "security",
+                    "technology": [
+                        "flask"
+                    ],
+                    "references": [
+                        "https://owasp.org/Top10/A01_2021-Broken_Access_Control"
+                    ],
+                    "subcategory": [
+                        "vuln"
+                    ],
+                    "likelihood": "LOW",
+                    "impact": "MEDIUM",
+                    "confidence": "MEDIUM",
+                    "license": "Semgrep Rules License v1.0. For more details, visit semgrep.dev/legal/rules-license",
+                    "vulnerability_class": [
+                        "Other"
+                    ],
+                    "source": "https://semgrep.dev/r/python.flask.security.audit.app-run-security-config.avoid_using_app_run_directly",
+                    "shortlink": "https://sg.run/vz5b"
+                },
+                "severity": "WARNING",
+                "fingerprint": "requires login",
+                "lines": "requires login",
+                "validation_state": "NO_VALIDATOR",
+                "engine_kind": "OSS"
+            }
+        }
+    ],
+    "errors": [
+        {
+            "code": 2,
+            "level": "warn",
+            "type": "Other syntax error",
+            "message": "Other syntax error at line iwa/templates/includes/sidebar.html:1:\n Failure: not a program",
+            "path": "iwa/templates/includes/sidebar.html"
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": ".github/workflows/codeql.yml",
+                        "start": {
+                            "line": 129,
+                            "col": 19,
+                            "offset": 5507
+                        },
+                        "end": {
+                            "line": 129,
+                            "col": 36,
+                            "offset": 5524
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/codeql.yml",
+                        "start": {
+                            "line": 131,
+                            "col": 29,
+                            "offset": 5507
+                        },
+                        "end": {
+                            "line": 131,
+                            "col": 46,
+                            "offset": 5524
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line .github/workflows/codeql.yml:129:\n When parsing a snippet as Bash for metavariable-pattern in rule 'yaml.github-actions.security.curl-eval.curl-eval', `{ matrix.language` was unexpected",
+            "path": ".github/workflows/codeql.yml",
+            "spans": [
+                {
+                    "file": ".github/workflows/codeql.yml",
+                    "start": {
+                        "line": 129,
+                        "col": 19,
+                        "offset": 5507
+                    },
+                    "end": {
+                        "line": 129,
+                        "col": 36,
+                        "offset": 5524
+                    }
+                },
+                {
+                    "file": ".github/workflows/codeql.yml",
+                    "start": {
+                        "line": 131,
+                        "col": 29,
+                        "offset": 5507
+                    },
+                    "end": {
+                        "line": 131,
+                        "col": 46,
+                        "offset": 5524
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": ".github/workflows/codeql.yml",
+                        "start": {
+                            "line": 164,
+                            "col": 164,
+                            "offset": 6567
+                        },
+                        "end": {
+                            "line": 164,
+                            "col": 167,
+                            "offset": 6570
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line .github/workflows/codeql.yml:164:\n When parsing a snippet as Bash for metavariable-pattern in rule 'yaml.github-actions.security.curl-eval.curl-eval', `${{` was unexpected",
+            "path": ".github/workflows/codeql.yml",
+            "spans": [
+                {
+                    "file": ".github/workflows/codeql.yml",
+                    "start": {
+                        "line": 164,
+                        "col": 164,
+                        "offset": 6567
+                    },
+                    "end": {
+                        "line": 164,
+                        "col": 167,
+                        "offset": 6570
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 86,
+                            "col": 23,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 86,
+                            "col": 45,
+                            "offset": 3188
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 86,
+                            "col": 50,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 86,
+                            "col": 81,
+                            "offset": 3197
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 86,
+                            "col": 96,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 86,
+                            "col": 113,
+                            "offset": 3183
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 86,
+                            "col": 121,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 86,
+                            "col": 142,
+                            "offset": 3187
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 87,
+                            "col": 30,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 87,
+                            "col": 52,
+                            "offset": 3188
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 87,
+                            "col": 57,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 87,
+                            "col": 88,
+                            "offset": 3197
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 87,
+                            "col": 94,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 87,
+                            "col": 111,
+                            "offset": 3183
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 90,
+                            "col": 23,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 90,
+                            "col": 45,
+                            "offset": 3188
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 90,
+                            "col": 50,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 90,
+                            "col": 81,
+                            "offset": 3197
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 90,
+                            "col": 87,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 90,
+                            "col": 104,
+                            "offset": 3183
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 91,
+                            "col": 30,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 91,
+                            "col": 52,
+                            "offset": 3188
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 91,
+                            "col": 57,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 91,
+                            "col": 88,
+                            "offset": 3197
+                        }
+                    },
+                    {
+                        "path": ".github/workflows/fod.yml",
+                        "start": {
+                            "line": 91,
+                            "col": 94,
+                            "offset": 3166
+                        },
+                        "end": {
+                            "line": 91,
+                            "col": 127,
+                            "offset": 3199
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line .github/workflows/fod.yml:86:\n When parsing a snippet as Bash for metavariable-pattern in rule 'yaml.github-actions.security.curl-eval.curl-eval', `{ env.DEFAULT_APP_NAME` was unexpected",
+            "path": ".github/workflows/fod.yml",
+            "spans": [
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 86,
+                        "col": 23,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 86,
+                        "col": 45,
+                        "offset": 3188
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 86,
+                        "col": 50,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 86,
+                        "col": 81,
+                        "offset": 3197
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 86,
+                        "col": 96,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 86,
+                        "col": 113,
+                        "offset": 3183
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 86,
+                        "col": 121,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 86,
+                        "col": 142,
+                        "offset": 3187
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 87,
+                        "col": 30,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 87,
+                        "col": 52,
+                        "offset": 3188
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 87,
+                        "col": 57,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 87,
+                        "col": 88,
+                        "offset": 3197
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 87,
+                        "col": 94,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 87,
+                        "col": 111,
+                        "offset": 3183
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 90,
+                        "col": 23,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 90,
+                        "col": 45,
+                        "offset": 3188
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 90,
+                        "col": 50,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 90,
+                        "col": 81,
+                        "offset": 3197
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 90,
+                        "col": 87,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 90,
+                        "col": 104,
+                        "offset": 3183
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 91,
+                        "col": 30,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 91,
+                        "col": 52,
+                        "offset": 3188
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 91,
+                        "col": 57,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 91,
+                        "col": 88,
+                        "offset": 3197
+                    }
+                },
+                {
+                    "file": ".github/workflows/fod.yml",
+                    "start": {
+                        "line": 91,
+                        "col": 94,
+                        "offset": 3166
+                    },
+                    "end": {
+                        "line": 91,
+                        "col": 127,
+                        "offset": 3199
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": ".github/workflows/trivy.yml",
+                        "start": {
+                            "line": 26,
+                            "col": 36,
+                            "offset": 623
+                        },
+                        "end": {
+                            "line": 26,
+                            "col": 61,
+                            "offset": 648
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line .github/workflows/trivy.yml:26:\n When parsing a snippet as Bash for metavariable-pattern in rule 'yaml.github-actions.security.curl-eval.curl-eval', `{ github.repository_owner` was unexpected",
+            "path": ".github/workflows/trivy.yml",
+            "spans": [
+                {
+                    "file": ".github/workflows/trivy.yml",
+                    "start": {
+                        "line": 26,
+                        "col": 36,
+                        "offset": 623
+                    },
+                    "end": {
+                        "line": 26,
+                        "col": 61,
+                        "offset": 648
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 19,
+                            "offset": 114
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                        "start": {
+                            "line": 7,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 9,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                        "start": {
+                            "line": 68,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 70,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                        "start": {
+                            "line": 164,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 164,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/assistant/templates/assistant/health_assistant.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: Health Assistant {% endblock %}\n\n{% block styles %}` was unexpected",
+            "path": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 19,
+                        "offset": 114
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                    "start": {
+                        "line": 7,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 9,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                    "start": {
+                        "line": 68,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 70,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+                    "start": {
+                        "line": 164,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 164,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 19,
+                            "offset": 113
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                        "start": {
+                            "line": 7,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 9,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                        "start": {
+                            "line": 99,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 101,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                        "start": {
+                            "line": 110,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 110,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/assistant/templates/assistant/symptom_checker.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: Symptom Checker {% endblock %}\n\n{% block styles %}` was unexpected",
+            "path": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 19,
+                        "offset": 113
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                    "start": {
+                        "line": 7,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 9,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                    "start": {
+                        "line": 99,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 101,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+                    "start": {
+                        "line": 110,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 110,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/auth/templates/auth/login.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 3,
+                            "col": 19,
+                            "offset": 45
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/auth/templates/auth/login.html",
+                        "start": {
+                            "line": 5,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 7,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/auth/templates/auth/login.html",
+                        "start": {
+                            "line": 88,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 88,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/auth/templates/auth/login.html:1:\n `{% extends 'base.html' %}\n\n{% block header %}` was unexpected",
+            "path": "iwa/blueprints/auth/templates/auth/login.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/auth/templates/auth/login.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 3,
+                        "col": 19,
+                        "offset": 45
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/auth/templates/auth/login.html",
+                    "start": {
+                        "line": 5,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 7,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/auth/templates/auth/login.html",
+                    "start": {
+                        "line": 88,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 88,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/auth/templates/auth/verify_2fa.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 3,
+                            "col": 19,
+                            "offset": 45
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/auth/templates/auth/verify_2fa.html",
+                        "start": {
+                            "line": 5,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 7,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/auth/templates/auth/verify_2fa.html:1:\n `{% extends 'base.html' %}\n\n{% block header %}` was unexpected",
+            "path": "iwa/blueprints/auth/templates/auth/verify_2fa.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/auth/templates/auth/verify_2fa.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 3,
+                        "col": 19,
+                        "offset": 45
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/auth/templates/auth/verify_2fa.html",
+                    "start": {
+                        "line": 5,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 7,
+                        "col": 20,
+                        "offset": 35
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/cart/templates/cart/index.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 103
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/cart/templates/cart/index.html",
+                        "start": {
+                            "line": 113,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 115,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/cart/templates/cart/index.html",
+                        "start": {
+                            "line": 126,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 126,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/cart/templates/cart/index.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: Cart {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/blueprints/cart/templates/cart/index.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/cart/templates/cart/index.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 103
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/cart/templates/cart/index.html",
+                    "start": {
+                        "line": 113,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 115,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/cart/templates/cart/index.html",
+                    "start": {
+                        "line": 126,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 126,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/main/templates/main/index.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 103
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/main/templates/main/index.html",
+                        "start": {
+                            "line": 91,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 91,
+                            "col": 7,
+                            "offset": 6
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/main/templates/main/index.html",
+                        "start": {
+                            "line": 178,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 180,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/main/templates/main/index.html",
+                        "start": {
+                            "line": 214,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 214,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/main/templates/main/index.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: Home {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/blueprints/main/templates/main/index.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/main/templates/main/index.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 103
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/main/templates/main/index.html",
+                    "start": {
+                        "line": 91,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 91,
+                        "col": 7,
+                        "offset": 6
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/main/templates/main/index.html",
+                    "start": {
+                        "line": 178,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 180,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/main/templates/main/index.html",
+                    "start": {
+                        "line": 214,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 214,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/products/templates/products/index.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 103
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/products/templates/products/index.html",
+                        "start": {
+                            "line": 41,
+                            "col": 79,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 41,
+                            "col": 92,
+                            "offset": 13
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/products/templates/products/index.html",
+                        "start": {
+                            "line": 44,
+                            "col": 77,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 44,
+                            "col": 88,
+                            "offset": 11
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/products/templates/products/index.html",
+                        "start": {
+                            "line": 74,
+                            "col": 59,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 74,
+                            "col": 60,
+                            "offset": 1
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/products/templates/products/index.html",
+                        "start": {
+                            "line": 125,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 126,
+                            "col": 15,
+                            "offset": 21
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/products/templates/products/index.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: Shop {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/blueprints/products/templates/products/index.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/products/templates/products/index.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 103
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/products/templates/products/index.html",
+                    "start": {
+                        "line": 41,
+                        "col": 79,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 41,
+                        "col": 92,
+                        "offset": 13
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/products/templates/products/index.html",
+                    "start": {
+                        "line": 44,
+                        "col": 77,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 44,
+                        "col": 88,
+                        "offset": 11
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/products/templates/products/index.html",
+                    "start": {
+                        "line": 74,
+                        "col": 59,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 74,
+                        "col": 60,
+                        "offset": 1
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/products/templates/products/index.html",
+                    "start": {
+                        "line": 125,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 126,
+                        "col": 15,
+                        "offset": 21
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/products/templates/products/view.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 117
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/products/templates/products/view.html",
+                        "start": {
+                            "line": 145,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 147,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/products/templates/products/view.html",
+                        "start": {
+                            "line": 157,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 157,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/products/templates/products/view.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: {{ product.name }} {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/blueprints/products/templates/products/view.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/products/templates/products/view.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 117
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/products/templates/products/view.html",
+                    "start": {
+                        "line": 145,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 147,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/products/templates/products/view.html",
+                    "start": {
+                        "line": 157,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 157,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/users/templates/users/home.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 103
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/home.html",
+                        "start": {
+                            "line": 54,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 58,
+                            "col": 15,
+                            "offset": 51
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/users/templates/users/home.html:1:\n `{% extends 'base.html' %}\n\n{% block title %} InsecureWebApp :: Home {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/blueprints/users/templates/users/home.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/users/templates/users/home.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 103
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/home.html",
+                    "start": {
+                        "line": 54,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 58,
+                        "col": 15,
+                        "offset": 51
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/users/templates/users/profile.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 3,
+                            "col": 19,
+                            "offset": 45
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/profile.html",
+                        "start": {
+                            "line": 5,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 7,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/profile.html",
+                        "start": {
+                            "line": 37,
+                            "col": 94,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 37,
+                            "col": 100,
+                            "offset": 6
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/profile.html",
+                        "start": {
+                            "line": 51,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 51,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/users/templates/users/profile.html:1:\n `{% extends 'base.html' %}\n\n{% block header %}` was unexpected",
+            "path": "iwa/blueprints/users/templates/users/profile.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/users/templates/users/profile.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 3,
+                        "col": 19,
+                        "offset": 45
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/profile.html",
+                    "start": {
+                        "line": 5,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 7,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/profile.html",
+                    "start": {
+                        "line": 37,
+                        "col": 94,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 37,
+                        "col": 100,
+                        "offset": 6
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/profile.html",
+                    "start": {
+                        "line": 51,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 51,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/users/templates/users/security.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 3,
+                            "col": 19,
+                            "offset": 45
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/security.html",
+                        "start": {
+                            "line": 5,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 7,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/security.html",
+                        "start": {
+                            "line": 52,
+                            "col": 123,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 52,
+                            "col": 129,
+                            "offset": 6
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/security.html",
+                        "start": {
+                            "line": 64,
+                            "col": 123,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 64,
+                            "col": 129,
+                            "offset": 6
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/security.html",
+                        "start": {
+                            "line": 82,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 84,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/security.html",
+                        "start": {
+                            "line": 106,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 106,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/users/templates/users/security.html:1:\n `{% extends 'base.html' %}\n\n{% block header %}` was unexpected",
+            "path": "iwa/blueprints/users/templates/users/security.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/users/templates/users/security.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 3,
+                        "col": 19,
+                        "offset": 45
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/security.html",
+                    "start": {
+                        "line": 5,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 7,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/security.html",
+                    "start": {
+                        "line": 52,
+                        "col": 123,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 52,
+                        "col": 129,
+                        "offset": 6
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/security.html",
+                    "start": {
+                        "line": 64,
+                        "col": 123,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 64,
+                        "col": 129,
+                        "offset": 6
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/security.html",
+                    "start": {
+                        "line": 82,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 84,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/security.html",
+                    "start": {
+                        "line": 106,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 106,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/blueprints/users/templates/users/update_profile.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 3,
+                            "col": 19,
+                            "offset": 45
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/update_profile.html",
+                        "start": {
+                            "line": 4,
+                            "col": 47,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 4,
+                            "col": 72,
+                            "offset": 25
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/update_profile.html",
+                        "start": {
+                            "line": 5,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 7,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/update_profile.html",
+                        "start": {
+                            "line": 47,
+                            "col": 85,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 47,
+                            "col": 91,
+                            "offset": 6
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/update_profile.html",
+                        "start": {
+                            "line": 60,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 62,
+                            "col": 20,
+                            "offset": 35
+                        }
+                    },
+                    {
+                        "path": "iwa/blueprints/users/templates/users/update_profile.html",
+                        "start": {
+                            "line": 84,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 84,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/blueprints/users/templates/users/update_profile.html:1:\n `{% extends 'base.html' %}\n\n{% block header %}` was unexpected",
+            "path": "iwa/blueprints/users/templates/users/update_profile.html",
+            "spans": [
+                {
+                    "file": "iwa/blueprints/users/templates/users/update_profile.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 3,
+                        "col": 19,
+                        "offset": 45
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/update_profile.html",
+                    "start": {
+                        "line": 4,
+                        "col": 47,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 4,
+                        "col": 72,
+                        "offset": 25
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/update_profile.html",
+                    "start": {
+                        "line": 5,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 7,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/update_profile.html",
+                    "start": {
+                        "line": 47,
+                        "col": 85,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 47,
+                        "col": 91,
+                        "offset": 6
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/update_profile.html",
+                    "start": {
+                        "line": 60,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 62,
+                        "col": 20,
+                        "offset": 35
+                    }
+                },
+                {
+                    "file": "iwa/blueprints/users/templates/users/update_profile.html",
+                    "start": {
+                        "line": 84,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 84,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/templates/base.html",
+                        "start": {
+                            "line": 222,
+                            "col": 51,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 222,
+                            "col": 62,
+                            "offset": 11
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/templates/base.html:222:\n `& Condition` was unexpected",
+            "path": "iwa/templates/base.html",
+            "spans": [
+                {
+                    "file": "iwa/templates/base.html",
+                    "start": {
+                        "line": 222,
+                        "col": 51,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 222,
+                        "col": 62,
+                        "offset": 11
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/templates/errors/404.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 113
+                        }
+                    },
+                    {
+                        "path": "iwa/templates/errors/404.html",
+                        "start": {
+                            "line": 16,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 16,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/templates/errors/404.html:1:\n `{% extends \"base.html\" %}\n\n{% block title %} InsecureWebApp :: File Not Found {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/templates/errors/404.html",
+            "spans": [
+                {
+                    "file": "iwa/templates/errors/404.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 113
+                    }
+                },
+                {
+                    "file": "iwa/templates/errors/404.html",
+                    "start": {
+                        "line": 16,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 16,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        },
+        {
+            "code": 3,
+            "level": "warn",
+            "type": [
+                "PartialParsing",
+                [
+                    {
+                        "path": "iwa/templates/errors/500.html",
+                        "start": {
+                            "line": 1,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 5,
+                            "col": 20,
+                            "offset": 104
+                        }
+                    },
+                    {
+                        "path": "iwa/templates/errors/500.html",
+                        "start": {
+                            "line": 17,
+                            "col": 1,
+                            "offset": 0
+                        },
+                        "end": {
+                            "line": 17,
+                            "col": 15,
+                            "offset": 14
+                        }
+                    }
+                ]
+            ],
+            "message": "Syntax error at line iwa/templates/errors/500.html:1:\n `{% extends \"base.html\" %}\n\n{% block title %} InsecureWebApp :: Error {% endblock %}\n\n{% block content %}` was unexpected",
+            "path": "iwa/templates/errors/500.html",
+            "spans": [
+                {
+                    "file": "iwa/templates/errors/500.html",
+                    "start": {
+                        "line": 1,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 5,
+                        "col": 20,
+                        "offset": 104
+                    }
+                },
+                {
+                    "file": "iwa/templates/errors/500.html",
+                    "start": {
+                        "line": 17,
+                        "col": 1,
+                        "offset": 0
+                    },
+                    "end": {
+                        "line": 17,
+                        "col": 15,
+                        "offset": 14
+                    }
+                }
+            ]
+        }
+    ],
+    "paths": {
+        "scanned": [
+            ".github/workflows/azure_webapp.yml",
+            ".github/workflows/ci.yml",
+            ".github/workflows/codeql.yml",
+            ".github/workflows/debricked.yml",
+            ".github/workflows/fod.yml",
+            ".github/workflows/semgrep.yml",
+            ".github/workflows/trivy.yml",
+            ".gitignore",
+            ".gitlab-ci.yml",
+            ".vscode/settings.json",
+            "Dockerfile",
+            "LICENSE",
+            "Makefile",
+            "Procfile",
+            "README.md",
+            "application.py",
+            "bin/cleanup.ps1",
+            "bin/cleanup.sh",
+            "bin/debricked-scan.ps1",
+            "bin/fod-scan.ps1",
+            "bin/init-letsencrypt.sh",
+            "bin/sast-scan.ps1",
+            "bin/sast-scan.sh",
+            "bin/scancentral-sast-scan.ps1",
+            "bin/wait-for-website.sh",
+            "data/certbot/.do-not-delete",
+            "data/nginx/.do-not-delete",
+            "data/nginx/app.conf",
+            "debricked-config.yaml",
+            "docker-compose.yml",
+            "etc/InsecureWebApp-Dev-Login.webmacro",
+            "etc/InsecureWebApp-Prod-Login.webmacro",
+            "etc/SampleResults-DAST.fpr",
+            "etc/actions/custom-fod-check-policy.yml",
+            "etc/actions/custom-ssc-check-policy.yml",
+            "etc/actions/gitlab-fod-codequality-report.yml",
+            "etc/actions/gitlab-ssc-codequality-report.yml",
+            "etc/actions/ssc-setup-appversion.yml",
+            "etc/gitlab-debricked.yml",
+            "etc/gitlab-fod.yml",
+            "etc/gitlab-scancentral.yml",
+            "etc/print_makefile_help.py",
+            "etc/sast-custom-rules/example-custom-rules.xml",
+            "etc/sast-filters/example-filter.txt",
+            "iwa/__init__.py",
+            "iwa/blueprints/assistant/__init__.py",
+            "iwa/blueprints/assistant/assistant_routes.py",
+            "iwa/blueprints/assistant/assistant_service.py",
+            "iwa/blueprints/assistant/static/css/assistant.css",
+            "iwa/blueprints/assistant/static/js/SymptomChecker.js",
+            "iwa/blueprints/assistant/templates/assistant/health_assistant.html",
+            "iwa/blueprints/assistant/templates/assistant/symptom_checker.html",
+            "iwa/blueprints/auth/__init__.py",
+            "iwa/blueprints/auth/auth_routes.py",
+            "iwa/blueprints/auth/templates/auth/login.html",
+            "iwa/blueprints/auth/templates/auth/register.html",
+            "iwa/blueprints/auth/templates/auth/verify_2fa.html",
+            "iwa/blueprints/cart/__init__.py",
+            "iwa/blueprints/cart/cart_routes.py",
+            "iwa/blueprints/cart/static/js/Cart.js",
+            "iwa/blueprints/cart/static/js/CartAdd.js",
+            "iwa/blueprints/cart/static/js/CartCount.js",
+            "iwa/blueprints/cart/templates/cart/index.html",
+            "iwa/blueprints/insecure/__init__.py",
+            "iwa/blueprints/insecure/insecure_routes.py",
+            "iwa/blueprints/insecure/templates/insecure/command_injection.html",
+            "iwa/blueprints/insecure/templates/insecure/insecure_cookies.html",
+            "iwa/blueprints/insecure/templates/insecure/insecure_headers.html",
+            "iwa/blueprints/insecure/templates/insecure/load_file.html",
+            "iwa/blueprints/insecure/templates/insecure/prompt_injection.html",
+            "iwa/blueprints/insecure/templates/insecure/template_injection.html",
+            "iwa/blueprints/insecure/templates/insecure/xss1.html",
+            "iwa/blueprints/insecure/templates/insecure/xss2.html",
+            "iwa/blueprints/main/__init__.py",
+            "iwa/blueprints/main/main_routes.py",
+            "iwa/blueprints/main/static/js/SubscribeNewsletter.js",
+            "iwa/blueprints/main/templates/main/index.html",
+            "iwa/blueprints/products/__init__.py",
+            "iwa/blueprints/products/data/SWA179-G243-00101/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA201-D342-00132/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA234-A568-00010/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA254-A971-00213/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA312-F432-00134/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA432-E901-00126/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA534-F528-00115/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA654-F106-00412/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA723-A375-00412/datasheet.pdf",
+            "iwa/blueprints/products/data/SWA754-B418-00315/datasheet.pdf",
+            "iwa/blueprints/products/products_api_routes.py",
+            "iwa/blueprints/products/products_routes.py",
+            "iwa/blueprints/products/repository.py",
+            "iwa/blueprints/products/static/js/NewProducts.js",
+            "iwa/blueprints/products/templates/products/index.html",
+            "iwa/blueprints/products/templates/products/view.html",
+            "iwa/blueprints/users/__init__.py",
+            "iwa/blueprints/users/repository.py",
+            "iwa/blueprints/users/templates/users/home.html",
+            "iwa/blueprints/users/templates/users/messages.html",
+            "iwa/blueprints/users/templates/users/orders.html",
+            "iwa/blueprints/users/templates/users/profile.html",
+            "iwa/blueprints/users/templates/users/reviews.html",
+            "iwa/blueprints/users/templates/users/security.html",
+            "iwa/blueprints/users/templates/users/update_profile.html",
+            "iwa/blueprints/users/users_api_routes.py",
+            "iwa/blueprints/users/users_routes.py",
+            "iwa/models/Product.py",
+            "iwa/models/Review.py",
+            "iwa/models/User.py",
+            "iwa/models/__init__.py",
+            "iwa/repository/__init__.py",
+            "iwa/repository/db.py",
+            "iwa/schema.sql",
+            "iwa/static/css/app.css",
+            "iwa/static/css/lib/bootstrap-icons.min.css",
+            "iwa/static/css/lib/bootstrap.min.css",
+            "iwa/static/css/lib/fonts/bootstrap-icons.woff",
+            "iwa/static/css/lib/fonts/bootstrap-icons.woff2",
+            "iwa/static/css/lib/owl.carousel/ajax-loader.gif",
+            "iwa/static/css/lib/owl.carousel/owl.carousel.min.css",
+            "iwa/static/css/lib/owl.carousel/owl.theme.default.min.css",
+            "iwa/static/css/lib/owl.carousel/owl.video.play.png",
+            "iwa/static/css/lib/star-rating-theme.min.css",
+            "iwa/static/css/lib/star-rating.min.css",
+            "iwa/static/data/email-db.json",
+            "iwa/static/favicon.ico",
+            "iwa/static/img/awaiting-image-sm.png",
+            "iwa/static/img/awaiting-image.png",
+            "iwa/static/img/card-image_1.jpg",
+            "iwa/static/img/card-image_2.jpg",
+            "iwa/static/img/card-image_3.jpg",
+            "iwa/static/img/favicons/favicon.png",
+            "iwa/static/img/favicons/favicon_whitebg.png",
+            "iwa/static/img/home_hero_1a.jpg",
+            "iwa/static/img/login_logo.png",
+            "iwa/static/img/logo.png",
+            "iwa/static/img/person_1.jpg",
+            "iwa/static/img/person_2.jpg",
+            "iwa/static/img/person_3.jpg",
+            "iwa/static/img/person_4.jpg",
+            "iwa/static/img/products/generic-product-1.jpg",
+            "iwa/static/img/products/generic-product-10.jpg",
+            "iwa/static/img/products/generic-product-11.jpg",
+            "iwa/static/img/products/generic-product-12.jpg",
+            "iwa/static/img/products/generic-product-2.jpg",
+            "iwa/static/img/products/generic-product-3.jpg",
+            "iwa/static/img/products/generic-product-4.jpg",
+            "iwa/static/img/products/generic-product-5.jpg",
+            "iwa/static/img/products/generic-product-6.jpg",
+            "iwa/static/img/products/generic-product-7.jpg",
+            "iwa/static/img/products/generic-product-8.jpg",
+            "iwa/static/img/products/generic-product-9.jpg",
+            "iwa/static/js/app.js",
+            "iwa/static/js/lib/bootstrap.bundle.min.js.map",
+            "iwa/static/js/lib/showdown.min.js.map",
+            "iwa/templates/base.html",
+            "iwa/templates/errors/404.html",
+            "iwa/templates/errors/500.html",
+            "iwa/templates/includes/alerts.html",
+            "iwa/templates/includes/cookies.html",
+            "iwa/templates/includes/sidebar.html",
+            "iwa/utils/db_utils.py",
+            "iwa/utils/file_utils.py",
+            "iwa/utils/view_utils.py",
+            "main.py",
+            "pyproject.toml",
+            "requirements.txt",
+            "run.bat",
+            "run.sh",
+            "runtime.txt",
+            "startup.sh"
+        ]
+    },
+    "time": {
+        "rules": [],
+        "rules_parse_time": 0.5359170436859131,
+        "profiling_times": {
+            "config_time": 7.470259189605713,
+            "core_time": 2.2237465381622314,
+            "ignores_time": 0.0019054412841796875,
+            "total_time": 9.705109596252441
+        },
+        "parsing_time": {
+            "total_time": 0.0,
+            "per_file_time": {
+                "mean": 0.0,
+                "std_dev": 0.0
+            },
+            "very_slow_stats": {
+                "time_ratio": 0.0,
+                "count_ratio": 0.0
+            },
+            "very_slow_files": []
+        },
+        "scanning_time": {
+            "total_time": 7.303314685821533,
+            "per_file_time": {
+                "mean": 0.016712390585403976,
+                "std_dev": 0.003070046123079244
+            },
+            "very_slow_stats": {
+                "time_ratio": 0.0,
+                "count_ratio": 0.0
+            },
+            "very_slow_files": []
+        },
+        "matching_time": {
+            "total_time": 0.0,
+            "per_file_and_rule_time": {
+                "mean": 0.0,
+                "std_dev": 0.0
+            },
+            "very_slow_stats": {
+                "time_ratio": 0.0,
+                "count_ratio": 0.0
+            },
+            "very_slow_rules_on_files": []
+        },
+        "tainting_time": {
+            "total_time": 0.0,
+            "per_def_and_rule_time": {
+                "mean": 0.0,
+                "std_dev": 0.0
+            },
+            "very_slow_stats": {
+                "time_ratio": 0.0,
+                "count_ratio": 0.0
+            },
+            "very_slow_rules_on_defs": []
+        },
+        "fixpoint_timeouts": [],
+        "prefiltering": {
+            "project_level_time": 0.0,
+            "file_level_time": 0.0,
+            "rules_with_project_prefilters_ratio": 0.0,
+            "rules_with_file_prefilters_ratio": 0.9618765045065218,
+            "rules_selected_ratio": 0.16111515422941275,
+            "rules_matched_ratio": 0.16111515422941275
+        },
+        "targets": [],
+        "total_bytes": 0,
+        "max_memory_bytes": 1117485696
+    },
+    "engine_requested": "OSS",
+    "skipped_rules": [],
+    "profiling_results": []
+}
