@@ -1,0 +1,61 @@
+9 Most Important SAST Findings - InsecureWebApp
+====================================================
+Project: https://github.com/kadraman/InsecureWebApp
+Local path: /home/carlos/DSS/InsecureWebApp
+Scan evidence: insecurewebapp-bandit-before.json and insecurewebapp-semgrep-before.json
+
+Note: This list intentionally keeps only one entry per vulnerability type. Multiple SQL Injection findings exist in the project, but they are grouped as a single vulnerability category.
+
+1. Command Injection via OS command execution
+   File: iwa/blueprints/insecure/insecure_routes.py
+   Affected line(s): 80-86
+   Detected by: Bandit B605; Semgrep dangerous-system-call
+   Notes: User-controlled input reaches an operating-system command execution sink through os.system().
+
+2. Dynamic code execution with exec()
+   File: iwa/blueprints/insecure/insecure_routes.py
+   Affected line(s): 149-152
+   Detected by: Bandit B102; Semgrep exec-detected
+   Notes: The application reads file contents and executes them as Python code using exec().
+
+3. Insecure deserialization using pickle from remember-me cookie
+   File: iwa/blueprints/auth/auth_routes.py
+   Affected line(s): 22, 86-94
+   Detected by: Bandit B403/B301; Semgrep avoid-pickle
+   Notes: Client-controlled cookie data is decoded and passed to pickle.loads(), allowing arbitrary code execution during deserialization.
+
+4. SQL Injection in product search
+   File: iwa/blueprints/products/products_api_routes.py
+   Affected line(s): 31-38
+   Detected by: Bandit B608; Semgrep tainted-sql-string/sqlalchemy-execute-raw-query
+   Notes: The keywords query parameter is concatenated directly into a SQL statement. Other SQL Injection instances also exist in repository.py, but they are grouped under this same vulnerability type.
+
+5. Server-Side Template Injection / unsafe direct Jinja2 template rendering
+   File: iwa/blueprints/insecure/insecure_routes.py
+   Affected line(s): 96-101
+   Detected by: Semgrep direct-use-of-jinja2
+   Notes: User-controlled template content is passed into Jinja2_Template and rendered, which may allow template injection.
+
+6. Path Manipulation / arbitrary file read path
+   File: iwa/blueprints/insecure/insecure_routes.py
+   Affected line(s): 68-72
+   Detected by: Manual code review; related to SAST exec/path finding
+   Notes: The filename query parameter is used directly to open a file path without validation or restriction to a safe base directory.
+
+7. Insecure cookie attributes
+   File: iwa/blueprints/insecure/insecure_routes.py
+   Affected line(s): 113-117
+   Detected by: Semgrep secure-set-cookie
+   Notes: The sessionid cookie is set without security attributes such as Secure, HttpOnly, and SameSite.
+
+8. Hardcoded secret key
+   File: main.py
+   Affected line(s): 24
+   Detected by: Bandit B105
+   Notes: A session secret is hardcoded in source code instead of being loaded from a protected environment variable or secret manager.
+
+9. Container runs without a non-root user
+   File: Dockerfile
+   Affected line(s): 1-17
+   Detected by: Semgrep dockerfile.security.missing-user
+   Notes: The Dockerfile does not define a USER instruction, so the application may run as root inside the container.

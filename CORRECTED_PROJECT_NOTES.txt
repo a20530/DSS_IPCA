@@ -1,0 +1,255 @@
+Corrected Project Notes - InsecureWebApp_corrected
+==================================================
+
+Original project:
+    /home/carlos/DSS/InsecureWebApp
+
+Corrected copy:
+    /home/carlos/DSS/InsecureWebApp_corrected
+
+After-scan evidence:
+    /home/carlos/DSS/insecurewebapp_corrected-bandit-after.json
+    /home/carlos/DSS/insecurewebapp_corrected-semgrep-after.json
+
+Before-scan evidence:
+    /home/carlos/DSS/insecurewebapp-bandit-before.json
+    /home/carlos/DSS/insecurewebapp-semgrep-before.json
+
+Build / run command for corrected version:
+    cd /home/carlos/DSS/InsecureWebApp_corrected
+    ./run-local.sh
+
+Corrected version test URL used:
+    http://127.0.0.1:5001
+
+
+Summary of corrections applied
+==============================
+
+1. Command Injection
+--------------------
+File:
+    iwa/blueprints/insecure/insecure_routes.py
+
+Original issue:
+    User-controlled input appeared to reach os.system().
+
+Correction applied:
+    Removed os.system() entirely. The route now supports only fixed safe actions and uses Python APIs:
+        - os.getloadavg() for status
+        - shutil.disk_usage('/') for disk usage
+
+Reason for adjustment:
+    The first suggested remediation used subprocess.run(..., shell=False), but Semgrep still flagged subprocess usage as potentially dangerous. To fully remove the command execution sink, the final correction avoids subprocess completely.
+
+Validation:
+    GET /insecure/command_injection?action=status returned HTTP 200.
+
+
+2. Dynamic Code Execution with exec()
+-------------------------------------
+File:
+    iwa/blueprints/insecure/insecure_routes.py
+
+Original issue:
+    The source() function read a user-selected file and executed its contents with exec().
+
+Correction applied:
+    Removed exec(). source() now reads plain text from a controlled safe directory:
+        safe_files/
+
+Additional file created:
+    safe_files/test.txt
+
+Validation:
+    GET /insecure/load_file?filename=test.txt returned HTTP 200 and displayed the safe file content.
+    GET /insecure/load_file?filename=../../etc/passwd returned HTTP 400.
+
+
+3. Insecure Deserialization with pickle
+---------------------------------------
+Files:
+    iwa/blueprints/auth/auth_routes.py
+    iwa/utils/view_utils.py
+
+Original issue:
+    rememberme cookie data was decoded and deserialized with pickle.loads().
+
+Correction applied:
+    Removed pickle and base64 serialization for rememberme cookies.
+    Replaced with itsdangerous.URLSafeSerializer signed JSON-style token.
+
+Extra correction required to keep the app working:
+    gen_login_cookie() originally rendered the target template directly. After the cookie change, this caused a context issue because g.user was not loaded for the rendered template.
+    The function now returns a redirect to users.home, allowing the normal request flow to load user context.
+
+Validation:
+    Admin login test:
+        POST /auth/login returned HTTP 302 to /user/home.
+        GET /user/home with the same cookies returned HTTP 200.
+
+
+4. SQL Injection
+----------------
+Files:
+    iwa/blueprints/products/products_api_routes.py
+    iwa/blueprints/products/repository.py
+
+Original issue:
+    User input was concatenated into SQL LIKE queries.
+
+Correction applied:
+    Replaced string concatenation with parameterized queries using ? placeholders.
+
+Validation:
+    GET /api/products/?keywords=solo returned HTTP 200.
+
+
+5. Server-Side Template Injection / unsafe Jinja2 rendering
+-----------------------------------------------------------
+Files:
+    iwa/blueprints/insecure/insecure_routes.py
+    iwa/blueprints/insecure/templates/insecure/template_injection.html
+
+Original issue:
+    User-controlled template content was passed to Jinja2_Template() and rendered.
+    The template also used rendered_output|safe.
+
+Correction applied:
+    Removed Jinja2_Template() usage.
+    The route now reads safe file content and passes it as normal escaped template data.
+    Removed the |safe filter from the template output.
+
+Validation:
+    POST /insecure/template_injection returned HTTP 200.
+
+
+6. Path Manipulation
+--------------------
+File:
+    iwa/blueprints/insecure/insecure_routes.py
+
+Original issue:
+    filename was used directly as a file path.
+
+Correction applied:
+    Added SAFE_FILES_DIR and path resolution checks.
+    Requests are rejected unless the resolved file path stays inside safe_files/.
+
+Validation:
+    Safe file request returned HTTP 200.
+    Traversal attempt returned HTTP 400.
+
+
+7. Insecure Cookie Attributes
+-----------------------------
+Files:
+    iwa/blueprints/insecure/insecure_routes.py
+    iwa/utils/view_utils.py
+    iwa/blueprints/auth/auth_routes.py
+
+Original issue:
+    Cookies were set without Secure, HttpOnly, and SameSite attributes.
+
+Correction applied:
+    Added Secure, HttpOnly, and SameSite=Strict to corrected application cookies.
+
+Validation:
+    POST /insecure/insecure_cookies returned Set-Cookie with:
+        Secure; HttpOnly; SameSite=Strict
+
+Note:
+    Semgrep still reports insecure cookies in assistant_routes.py. This is outside the 9 documented corrections and can be handled as an additional future fix.
+
+
+8. Hardcoded Secret Key
+-----------------------
+Files:
+    main.py
+    iwa/__init__.py
+    run-local.sh
+
+Original issue:
+    SESSION_SECRET was hardcoded in main.py and Flask had a default SECRET_KEY.
+
+Correction applied:
+    Removed the hardcoded SESSION_SECRET assignment from main.py.
+    iwa/__init__.py now loads SECRET_KEY from the SESSION_SECRET environment variable and fails if it is missing.
+    run-local.sh sets a local development SESSION_SECRET so the app still runs locally.
+
+Reason for adjustment:
+    The app needs a SECRET_KEY to start. To keep the corrected project runnable, the local launcher provides the value through the environment instead of source code.
+
+Validation:
+    Flask routes loaded successfully with SESSION_SECRET set.
+    The app started successfully on port 5001.
+
+
+9. Container Runs Without Non-Root User
+---------------------------------------
+File:
+    Dockerfile
+
+Original issue:
+    The image did not define a USER, so the container could run as root.
+
+Correction applied:
+    Added:
+        RUN useradd -m appuser && chown -R appuser:appuser /usr/src/iwa
+        USER appuser
+
+Validation:
+    Static correction only; Docker image was not built in this run.
+
+
+Smoke test results
+==================
+
+The corrected app was started on port 5001 and these checks passed:
+
+    GET  /                                      -> 200
+    GET  /api/products/?keywords=solo          -> 200
+    GET  /insecure/load_file?filename=test.txt -> 200
+    GET  /insecure/load_file?filename=../../etc/passwd -> 400
+    GET  /insecure/command_injection?action=status -> 200
+    POST /insecure/template_injection          -> 200
+    POST /insecure/insecure_cookies            -> 200, cookie attributes present
+    POST /auth/login with admin/password       -> 302
+    GET  /user/home after login                -> 200
+
+
+Scan comparison
+===============
+
+Bandit before:
+    23 total findings
+    High: 1
+    Medium: 5
+    Low: 17
+
+Bandit after:
+    13 total findings
+    High: 0
+    Medium: 0
+    Low: 13
+
+Semgrep before:
+    33 findings
+
+Semgrep after:
+    17 findings
+
+Important resolved items:
+    - B605 Command Injection removed
+    - B102 exec() removed
+    - B301/B403 pickle deserialization/import removed from corrected app code
+    - B608 SQL Injection removed
+    - Docker missing USER finding removed
+    - Hardcoded SESSION_SECRET in main.py removed
+
+Remaining findings summary:
+    - Bandit still reports test assert statements in tests/.
+    - Bandit reports a likely false positive on the string 'Incorrect password.' as B105.
+    - Semgrep reports CSRF missing in some forms.
+    - Semgrep reports missing SRI integrity attributes on CDN script/style tags.
+    - Semgrep reports insecure cookies in assistant_routes.py, outside the 9 corrected items.

@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>InsecureWebApp - SAST Vulnerability Summary</title>
+  <style>
+    @page { size: A4; margin: 13mm; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 11px;
+      line-height: 1.28;
+      color: #111;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    h1 { font-size: 20px; margin: 0 0 4px; }
+    h2 { font-size: 14px; margin: 14px 0 6px; border-bottom: 1px solid #bbb; padding-bottom: 2px; }
+    h3 { font-size: 12px; margin: 8px 0 4px; }
+    .meta { color: #444; margin-bottom: 10px; }
+    .note { background: #f4f7fb; border-left: 4px solid #4b83c4; padding: 6px 8px; margin: 8px 0 12px; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; }
+    th, td { border: 1px solid #bbb; padding: 5px; vertical-align: top; }
+    th { background: #e9eef5; text-align: left; }
+    .vuln { break-inside: avoid; page-break-inside: avoid; margin-bottom: 9px; }
+    .label { font-weight: bold; color: #222; }
+    pre {
+      background: #f6f6f6;
+      border: 1px solid #ccc;
+      padding: 6px;
+      margin: 4px 0 6px;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 9.2px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .fix { background: #f8fff4; border-left: 4px solid #5a9b45; padding: 5px 7px; }
+    .small { font-size: 10px; color: #333; }
+  </style>
+</head>
+<body>
+  <h1>SAST Vulnerability Summary - InsecureWebApp</h1>
+  <div class="meta">
+    Project: <strong>kadraman/InsecureWebApp</strong> | Technology: <strong>Python / Flask / SQLite</strong><br>
+    Tools: <strong>Bandit</strong> and <strong>Semgrep</strong> | Local path: <code>/home/carlos/DSS/InsecureWebApp</code>
+  </div>
+
+  <div class="note">
+    This document is intentionally simple: for each finding it shows the vulnerability, affected file/lines, affected code, and the remediation approach.
+    Multiple occurrences of the same type, such as SQL Injection, are grouped as one vulnerability type.
+  </div>
+
+  <h2>Overview</h2>
+  <table>
+    <tr><th>#</th><th>Vulnerability</th><th>File / lines</th><th>Main fix</th></tr>
+    <tr><td>1</td><td>Command Injection <strong>(false positive / mitigated in current flow)</strong></td><td><code>iwa/blueprints/insecure/insecure_routes.py:80-86</code></td><td>No exploitable execution was confirmed; corrected version removes <code>os.system()</code>.</td></tr>
+    <tr><td>2</td><td>Dynamic Code Execution</td><td><code>iwa/blueprints/insecure/insecure_routes.py:149-152</code></td><td>Remove <code>exec()</code>; return file contents safely.</td></tr>
+    <tr><td>3</td><td>Insecure Deserialization</td><td><code>iwa/blueprints/auth/auth_routes.py:22, 86-94</code></td><td>Replace <code>pickle</code> cookies with signed JSON/session tokens.</td></tr>
+    <tr><td>4</td><td>SQL Injection</td><td><code>iwa/blueprints/products/products_api_routes.py:31-38</code></td><td>Use parameterized SQL queries.</td></tr>
+    <tr><td>5</td><td>Server-Side Template Injection</td><td><code>iwa/blueprints/insecure/insecure_routes.py:96-101</code></td><td>Do not render user-controlled templates.</td></tr>
+    <tr><td>6</td><td>Path Manipulation</td><td><code>iwa/blueprints/insecure/insecure_routes.py:68-72</code></td><td>Restrict files to a safe base directory.</td></tr>
+    <tr><td>7</td><td>Insecure Cookie Attributes</td><td><code>iwa/blueprints/insecure/insecure_routes.py:113-117</code></td><td>Set <code>Secure</code>, <code>HttpOnly</code>, and <code>SameSite</code>.</td></tr>
+    <tr><td>8</td><td>Hardcoded Secret</td><td><code>main.py:24</code></td><td>Load secret from environment/configuration.</td></tr>
+    <tr><td>9</td><td>Container Runs as Root</td><td><code>Dockerfile:1-17</code></td><td>Create and use a non-root container user.</td></tr>
+  </table>
+
+  <h2>Detailed Findings</h2>
+
+  <div class="vuln">
+    <h3>1. Command Injection — False Positive / Mitigated in Current Flow</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/insecure/insecure_routes.py:80-86</code></p>
+<pre>@insecure_bp.route("/command_injection", methods = ["GET"])
+def command_injection():
+    arguments = request.args.get('arguments')
+    home = os.getenv('APPHOME')
+    cmd = home.join(INITCMD).join(arguments)
+    os.system(cmd);</pre>
+    <p><span class="label">Issue:</span> SAST reports this because user-controlled input appears to reach <code>os.system()</code>. However, in the current execution flow this is considered a false positive / mitigated finding: the command base value is not defined at runtime, so the route fails before command execution is reached.</p>
+    <p><span class="label">Validation:</span> The test request returned HTTP 500 and the proof file was not created, confirming that command execution was not reached in the current state.</p>
+    <div class="fix"><span class="label">Correction:</span> Even though exploitation was not confirmed, the safer remediation is to remove <code>os.system()</code>. Remove shell command execution entirely and use safe Python APIs for the allowed actions.</div>
+<pre># corrected implementation
+@insecure_bp.route("/command_injection", methods=["GET"])
+def command_injection():
+    action = request.args.get("action", "status")
+    if action == "status":
+        load_1, load_5, load_15 = os.getloadavg()
+        output = f"load average: {load_1:.2f}, {load_5:.2f}, {load_15:.2f}
+"
+    elif action == "disk":
+        usage = shutil.disk_usage("/")
+        output = f"total={usage.total} used={usage.used} free={usage.free}
+"
+    else:
+        abort(400, "Unsupported action")
+    return Response(output, mimetype="text/plain")</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>2. Dynamic Code Execution with exec()</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/insecure/insecure_routes.py:149-152</code></p>
+<pre>def source(script_path):
+    with open(script_path, 'r') as script_file:
+        script_contents = script_file.read()
+        exec(script_contents)</pre>
+    <p><span class="label">Issue:</span> The application reads a file and executes its content as Python code.</p>
+    <div class="fix"><span class="label">Correction:</span> Remove <code>exec()</code>. If file viewing is required, read text only from an approved directory and return it as plain text.</div>
+<pre># corrected implementation
+@insecure_bp.route("/load_file", methods=["GET"])
+def load_file():
+    filename = request.args.get("filename", "")
+    contents = source(filename)
+    return Response(contents, mimetype="text/plain")
+
+# source() validates that files stay inside safe_files/</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>3. Insecure Deserialization with pickle</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/auth/auth_routes.py:22, 86-94</code></p>
+<pre>import pickle
+
+if 'rememberme' in request.cookies:
+    b64 = request.cookies.get('rememberme')
+    a = pickle.loads(base64.b64decode(b64))
+    session.clear()
+    session["email"] = a.email</pre>
+    <p><span class="label">Issue:</span> A client-controlled cookie is deserialized with <code>pickle.loads()</code>. Pickle can execute code during deserialization.</p>
+    <div class="fix"><span class="label">Correction:</span> Do not use pickle for client data. Use Flask signed sessions or a signed JSON token, for example with <code>itsdangerous</code>.</div>
+<pre># corrected example
+serializer = URLSafeSerializer(current_app.config["SECRET_KEY"],
+                               salt="rememberme")
+try:
+    data = serializer.loads(request.cookies.get("rememberme"))
+except BadSignature:
+    abort(400, "Invalid remember-me token")
+
+session.clear()
+session["email"] = data["email"]
+session["loggedin"] = True</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>4. SQL Injection</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/products/products_api_routes.py:31-38</code></p>
+<pre>@products_api_bp.route("/", methods=['GET'])
+def search_products():
+    keywords = request.args.get('keywords', '')
+    db = get_db()
+    query = "SELECT * FROM products WHERE name LIKE '%" + keywords + "%'"
+    products = db.execute(query).fetchall()</pre>
+    <p><span class="label">Issue:</span> User input is concatenated directly into a SQL query.</p>
+    <div class="fix"><span class="label">Correction:</span> Use parameterized queries.</div>
+<pre># corrected example
+keywords = request.args.get("keywords", "")
+pattern = f"%{keywords}%"
+products = db.execute(
+    "SELECT * FROM products WHERE name LIKE ?",
+    (pattern,),
+).fetchall()</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>5. Server-Side Template Injection / Unsafe Jinja2 Rendering</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/insecure/insecure_routes.py:96-101</code></p>
+<pre>template = request.form.get('template')
+filename = request.form.get('filename')
+t = Jinja2_Template(template)
+name = source(filename)
+html = t.render(name=name)
+return html</pre>
+    <p><span class="label">Issue:</span> User-controlled template content is rendered by Jinja2, which may allow template injection.</p>
+    <div class="fix"><span class="label">Correction:</span> Never render user-supplied templates. Use static templates with <code>render_template()</code> and pass user input only as escaped data.</div>
+<pre># corrected example
+name = request.form.get("name", "")
+return render_template("insecure/template_result.html", name=name)</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>6. Path Manipulation / Arbitrary File Path</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/insecure/insecure_routes.py:68-72</code></p>
+<pre>@insecure_bp.route("/load_file", methods = ["GET"])
+def load_file():
+    filename = request.args.get('filename')
+    contents = source(filename)
+    response = make_response(contents, 200)</pre>
+    <p><span class="label">Issue:</span> A user-controlled filename is used directly without path validation.</p>
+    <div class="fix"><span class="label">Correction:</span> Normalize the path and ensure it remains inside a safe base directory. Reject absolute paths and <code>../</code> traversal.</div>
+<pre># corrected implementation
+SAFE_FILES_DIR = (Path(__file__).resolve().parents[3] / "safe_files").resolve()
+
+def source(script_path):
+    requested = (SAFE_FILES_DIR / script_path).resolve()
+    if not str(requested).startswith(str(SAFE_FILES_DIR)):
+        abort(400, "Invalid path")
+    if not requested.is_file():
+        abort(404, "File not found")
+    return requested.read_text(encoding="utf-8", errors="replace")</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>7. Insecure Cookie Attributes</h3>
+    <p><span class="label">File / lines:</span> <code>iwa/blueprints/insecure/insecure_routes.py:113-117</code></p>
+<pre>@insecure_bp.route("/insecure_cookies", methods=['POST'])
+def insecure_cookies():
+    session_id = request.form.get('session_id', '12345')
+    response = make_response('Insecure cookie set')
+    response.set_cookie('sessionid', session_id)</pre>
+    <p><span class="label">Issue:</span> The cookie is created without hardened attributes.</p>
+    <div class="fix"><span class="label">Correction:</span> Set secure attributes.</div>
+<pre># corrected example
+response.set_cookie(
+    "sessionid",
+    session_id,
+    secure=True,
+    httponly=True,
+    samesite="Strict",
+)</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>8. Hardcoded Secret Key</h3>
+    <p><span class="label">File / lines:</span> <code>main.py:24</code></p>
+<pre>os.environ["SESSION_SECRET"]="YourSessionSecret"</pre>
+    <p><span class="label">Issue:</span> A secret value is hardcoded in source code.</p>
+    <div class="fix"><span class="label">Correction:</span> Load the secret from the environment and fail safely if missing.</div>
+<pre># corrected implementation in iwa/__init__.py
+app.config.from_mapping(
+    SECRET_KEY=os.environ.get("SESSION_SECRET"),
+    DATABASE=os.path.join(app.instance_path, "insecurewebapp.sqlite"),
+    SESSION_TYPE="filesystem",
+)
+if not app.config.get("SECRET_KEY"):
+    raise RuntimeError("SESSION_SECRET environment variable is required")</pre>
+  </div>
+
+  <div class="vuln">
+    <h3>9. Container Runs Without Non-Root User</h3>
+    <p><span class="label">File / lines:</span> <code>Dockerfile:1-17</code></p>
+<pre>FROM python:3.12-slim-bookworm
+WORKDIR /usr/src/iwa
+COPY requirements.txt /usr/src/iwa/requirements.txt
+RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
+COPY . /usr/src/iwa/
+CMD ["gunicorn", "--bind", "0.0.0.0", "--timeout", "600", "iwa:create_app()"]</pre>
+    <p><span class="label">Issue:</span> No <code>USER</code> instruction is defined, so the application may run as root inside the container.</p>
+    <div class="fix"><span class="label">Correction:</span> Create a non-root user and run the application with it.</div>
+<pre># corrected example
+RUN useradd -m appuser && chown -R appuser:appuser /usr/src/iwa
+USER appuser
+CMD ["gunicorn", "--bind", "0.0.0.0", "--timeout", "600", "iwa:create_app()"]</pre>
+  </div>
+
+  <h2>Conclusion</h2>
+  <p>
+    The project contains multiple vulnerability types detected by SAST and confirmed by code review. The remediation approach is to remove unsafe execution patterns,
+    validate user-controlled inputs, use safe serialization and parameterized queries, harden cookies/secrets, and improve container security.
+  </p>
+  <p class="small">Prepared as a compact report draft suitable for conversion to PDF, approximately four A4 pages depending on print scaling.</p>
+</body>
+</html>

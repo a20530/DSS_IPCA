@@ -1,0 +1,749 @@
+{
+    "errors": [],
+    "generated_at": "2026-06-22T19:52:52Z",
+    "metrics": {
+        "./application.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 16,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./etc/print_makefile_help.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 18,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 78,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/assistant/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 17,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/assistant/assistant_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 124,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/assistant/assistant_service.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 90,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/auth/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 17,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/auth/auth_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 1,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 1,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 134,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/cart/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 17,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/cart/cart_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 21,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/insecure/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 17,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/insecure/insecure_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 138,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/main/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 17,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/main/main_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 37,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/products/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 19,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/products/products_api_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 66,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/products/products_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 106,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/products/repository.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 151,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/users/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 19,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/users/repository.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 20,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/users/users_api_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 43,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/blueprints/users/users_routes.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 138,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/models/Product.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 30,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/models/Review.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 25,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/models/User.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 33,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/models/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 0,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/repository/__init__.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 0,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/repository/db.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 55,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/utils/db_utils.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 28,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/utils/file_utils.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 25,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./iwa/utils/view_utils.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 43,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./main.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 18,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./tests/conftest.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 40,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./tests/functional/test_ui.py": {
+            "CONFIDENCE.HIGH": 7,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 7,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 32,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./tests/unit/test_models.py": {
+            "CONFIDENCE.HIGH": 5,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 5,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 28,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "./tests/unit/test_repository.py": {
+            "CONFIDENCE.HIGH": 0,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 0,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 0,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 19,
+            "nosec": 0,
+            "skipped_tests": 0
+        },
+        "_totals": {
+            "CONFIDENCE.HIGH": 12,
+            "CONFIDENCE.LOW": 0,
+            "CONFIDENCE.MEDIUM": 1,
+            "CONFIDENCE.UNDEFINED": 0,
+            "SEVERITY.HIGH": 0,
+            "SEVERITY.LOW": 13,
+            "SEVERITY.MEDIUM": 0,
+            "SEVERITY.UNDEFINED": 0,
+            "loc": 1679,
+            "nosec": 0,
+            "skipped_tests": 0
+        }
+    },
+    "results": [
+        {
+            "code": "109         elif not check_password_hash(user[\"password\"], password):\n110             errors['password'] = \"Incorrect password.\"\n111 \n",
+            "col_offset": 19,
+            "end_col_offset": 29,
+            "filename": "./iwa/blueprints/auth/auth_routes.py",
+            "issue_confidence": "MEDIUM",
+            "issue_cwe": {
+                "id": 259,
+                "link": "https://cwe.mitre.org/data/definitions/259.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Possible hardcoded password: 'Incorrect password.'",
+            "line_number": 110,
+            "line_range": [
+                110
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html",
+            "test_id": "B105",
+            "test_name": "hardcoded_password_string"
+        },
+        {
+            "code": "27     response = test_client.get('/')\n28     assert response.status_code == 200\n29     assert b\"Welcome To <br/>IWA Pharmacy Direct\" in response.data\n",
+            "col_offset": 4,
+            "end_col_offset": 38,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 28,
+            "line_range": [
+                28
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "28     assert response.status_code == 200\n29     assert b\"Welcome To <br/>IWA Pharmacy Direct\" in response.data\n30     assert b\"Register\" in response.data\n",
+            "col_offset": 4,
+            "end_col_offset": 66,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 29,
+            "line_range": [
+                29
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "29     assert b\"Welcome To <br/>IWA Pharmacy Direct\" in response.data\n30     assert b\"Register\" in response.data\n31     assert b\"Shop Now\" in response.data\n",
+            "col_offset": 4,
+            "end_col_offset": 39,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 30,
+            "line_range": [
+                30
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "30     assert b\"Register\" in response.data\n31     assert b\"Shop Now\" in response.data\n32 \n",
+            "col_offset": 4,
+            "end_col_offset": 39,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 31,
+            "line_range": [
+                31
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "38     response = test_client.get('/products/')\n39     assert response.status_code == 200\n40     assert b\"Enter search keywords\" in response.data\n",
+            "col_offset": 4,
+            "end_col_offset": 38,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 39,
+            "line_range": [
+                39
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "39     assert response.status_code == 200\n40     assert b\"Enter search keywords\" in response.data\n41     assert b\"Alphadex Lite\" in response.data\n",
+            "col_offset": 4,
+            "end_col_offset": 52,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 40,
+            "line_range": [
+                40
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "40     assert b\"Enter search keywords\" in response.data\n41     assert b\"Alphadex Lite\" in response.data\n42 \n",
+            "col_offset": 4,
+            "end_col_offset": 44,
+            "filename": "./tests/functional/test_ui.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 41,
+            "line_range": [
+                41
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "25     \"\"\"\n26     assert new_user.email == 'user5@localhost.com'\n27     assert new_user.first_name == 'Steve'\n",
+            "col_offset": 4,
+            "end_col_offset": 50,
+            "filename": "./tests/unit/test_models.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 26,
+            "line_range": [
+                26
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "26     assert new_user.email == 'user5@localhost.com'\n27     assert new_user.first_name == 'Steve'\n28     assert new_user.last_name == 'Shopper'\n",
+            "col_offset": 4,
+            "end_col_offset": 41,
+            "filename": "./tests/unit/test_models.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 27,
+            "line_range": [
+                27
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "27     assert new_user.first_name == 'Steve'\n28     assert new_user.last_name == 'Shopper'\n29 \n",
+            "col_offset": 4,
+            "end_col_offset": 42,
+            "filename": "./tests/unit/test_models.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 28,
+            "line_range": [
+                28
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "34     \"\"\"\n35     assert new_product.code == 'SWA543-A343-00462'\n36     assert new_product.name == 'Pilex One'\n",
+            "col_offset": 4,
+            "end_col_offset": 50,
+            "filename": "./tests/unit/test_models.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 35,
+            "line_range": [
+                35
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        },
+        {
+            "code": "35     assert new_product.code == 'SWA543-A343-00462'\n36     assert new_product.name == 'Pilex One'\n",
+            "col_offset": 4,
+            "end_col_offset": 42,
+            "filename": "./tests/unit/test_models.py",
+            "issue_confidence": "HIGH",
+            "issue_cwe": {
+                "id": 703,
+                "link": "https://cwe.mitre.org/data/definitions/703.html"
+            },
+            "issue_severity": "LOW",
+            "issue_text": "Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.",
+            "line_number": 36,
+            "line_range": [
+                36
+            ],
+            "more_info": "https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html",
+            "test_id": "B101",
+            "test_name": "assert_used"
+        }
+    ]
+}
